@@ -1,3 +1,5 @@
+import { StudentsAdminPage } from '@/pages/StudentsAdminPage';
+import { AccessReportPage } from '@/pages/AccessReportPage';
 import { SecurityPage } from '@/pages/SecurityPage';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { AuthProvider } from '@/context/AuthContext';
@@ -14,6 +16,8 @@ export function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
+<Route path="/manage-students" element={<ProtectedRoute allowedRoles={['ADMIN']}><StudentsAdminPage /></ProtectedRoute>} />
+<Route path="/reports" element={<ProtectedRoute allowedRoles={['ADMIN','SECURITY']}><AccessReportPage /></ProtectedRoute>} />
           <Route path="/login" element={<LoginPage />} />
           <Route
             path="/dashboard"

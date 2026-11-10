@@ -32,8 +32,9 @@ public class QrService {
         Student student=students.findById(link.studentId).orElseThrow(() -> ApiException.missing("Student not found"));
         if (!"ACTIVE".equals(student.status)) throw new ApiException(403,"Student is inactive");
         byte[] bytes=new byte[32]; random.nextBytes(bytes);
-        QrCode q=new QrCode(); q.guardianStudentId=link.id; q.token=Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
-        q.createdAt=LocalDateTime.now(clock); q.expiresAt=q.createdAt.plusMinutes(data.expiresInMinutes()==null?30:data.expiresInMinutes()); q.status="ACTIVE";
+        QrCode q=kz.school.security.patterns.qr.QrIssuePlan.builder().forRelationship(link.id).issuedAt(LocalDateTime.now(clock))
+            .validForMinutes(data.expiresInMinutes()==null?30:data.expiresInMinutes()).build()
+            .issue(Base64.getUrlEncoder().withoutPadding().encodeToString(bytes));
         return DtoMapper.qr(codes.save(q));
     }
     public QrResponse revoke(User actor, UUID id) {

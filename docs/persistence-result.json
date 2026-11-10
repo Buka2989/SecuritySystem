@@ -1,0 +1,29 @@
+{
+  "result": "PASS",
+  "tables": {
+    "users": {
+      "rows": 9,
+      "digest": "1ee4d2d2b3b2ffc8c4354a79512938ba"
+    },
+    "students": {
+      "rows": 5,
+      "digest": "a2b49856ddee9b6e601a4e21c5ef72c5"
+    },
+    "guardian_student": {
+      "rows": 5,
+      "digest": "de0efdaacaee929932385b17d82e1c84"
+    },
+    "verification_requests": {
+      "rows": 6,
+      "digest": "c35fda74e77e874adf53ca06995c89e7"
+    },
+    "qr_codes": {
+      "rows": 3,
+      "digest": "d24ded3f4924d17f6ceb3110fa2a715f"
+    },
+    "access_logs": {
+      "rows": 6,
+      "digest": "1e3e61054151c9fe0dee3a720b3e6b02"
+    }
+  }
+}

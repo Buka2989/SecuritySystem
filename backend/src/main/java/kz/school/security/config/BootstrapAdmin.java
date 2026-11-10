@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import kz.school.security.service.UserService;
 @Configuration
 public class BootstrapAdmin {
-    @Bean ApplicationRunner bootstrap(UserService users, @Value("${app.bootstrap-admin.username}") String username,
+    @Bean @org.springframework.core.annotation.Order(1) ApplicationRunner bootstrap(UserService users, @Value("${app.bootstrap-admin.username}") String username,
                                       @Value("${app.bootstrap-admin.password}") String password) {
         return args -> users.bootstrap(username,password);
     }

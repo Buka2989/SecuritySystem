@@ -10,10 +10,13 @@ import { QRDisplay } from '@/components/QRDisplay/QRDisplay';
 import { RELATIONSHIP_LABELS } from '@/components/StudentCard/StudentCard';
 
 export function StudentDetailPage() {
+  const [revision,setRevision]=useState(0);
+  useEffect(()=>{const update=()=>setRevision(r=>r+1);window.addEventListener('verification-updated',update);return()=>window.removeEventListener('verification-updated',update);},[]);
   const { guardianStudentId } = useParams<{ guardianStudentId: string }>();
   const { token } = useAuth();
   const [link, setLink] = useState<GuardianStudentWithDetails | null | undefined>(undefined);
   const [qr, setQr] = useState<QrCode | null>(null);
+  const [minutes,setMinutes]=useState(15);
   const [isGenerating, setIsGenerating] = useState(false);
 
   useEffect(() => {
@@ -49,7 +52,7 @@ export function StudentDetailPage() {
     return () => {
       cancelled = true;
     };
-  }, [guardianStudentId,token]);
+  }, [guardianStudentId,token,revision]);
 
   if (link === null) {
     return <Navigate to="/dashboard" replace />;
@@ -69,7 +72,7 @@ export function StudentDetailPage() {
   setIsGenerating(true);
 
   try {
-    const created = await generateQr(guardianStudentId, token);
+    const created = await generateQr(guardianStudentId, token, minutes);
     setQr(created);
   } catch (error) {
     console.error('Failed to generate QR:', error);
@@ -104,7 +107,7 @@ export function StudentDetailPage() {
       </section>
 
       {link.verificationStatus === 'APPROVED' && (
-        <QRDisplay qr={qr} isGenerating={isGenerating} onGenerate={handleGenerate} />
+        <><div className="field"><label htmlFor="qr-lifetime">Срок действия QR</label><select id="qr-lifetime" value={minutes} onChange={e=>setMinutes(Number(e.target.value))}><option value={5}>5 минут</option><option value={15}>15 минут</option><option value={30}>30 минут</option></select></div><QRDisplay qr={qr} isGenerating={isGenerating} onGenerate={handleGenerate} /></>
       )}
 
       {link.verificationStatus === 'PENDING' && (

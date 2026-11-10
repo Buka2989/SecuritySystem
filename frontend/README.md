@@ -1,8 +1,9 @@
 # React frontend
 
 The existing SecuritySystemv2 interface, preserved during the Java backend migration.
-Its seven pages serve parents, trusted persons, administrators, and security guards.
-The design and CSS are unchanged. Requests use the real backend through
+Its pages serve parents, trusted persons, administrators, and security guards,
+including student management and access-report downloads on this branch.
+Use Node.js 22.12+ and npm. Requests use the real backend through
 `src/services/api`; there is no mock API service.
 
 ```sh

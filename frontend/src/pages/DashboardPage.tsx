@@ -6,6 +6,8 @@ import type { GuardianStudentWithDetails } from '@/types';
 import { StudentCard } from '@/components/StudentCard/StudentCard';
 
 export function DashboardPage() {
+  const [revision,setRevision]=useState(0);
+  useEffect(()=>{const update=()=>setRevision(r=>r+1);window.addEventListener('verification-updated',update);return()=>window.removeEventListener('verification-updated',update);},[]);
   const { user, token } = useAuth();
 
   const [links, setLinks] =
@@ -42,7 +44,7 @@ async function loadChildren() {
     return () => {
       cancelled = true;
     };
-  }, [user, token]);
+  }, [user, token, revision]);
 
   // Обработка удаления ребёнка
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { GuardianStudentWithDetails } from '@/types';
 import { StatusBadge } from '@/components/StatusBadge/StatusBadge';
@@ -27,6 +27,10 @@ export function StudentCard({
   const [loading, setLoading] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setStatus(link.verificationStatus);
+  }, [link.verificationStatus]);
 
   async function handleResubmit() {
     try {

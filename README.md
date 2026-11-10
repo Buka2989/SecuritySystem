@@ -5,9 +5,11 @@ from FastAPI to Spring Boot, preserving the React interface and PostgreSQL schem
 The source analysis, all 21 original API operations, and documented changes are
 available in [docs/MIGRATION.md](docs/MIGRATION.md) (in Russian).
 
-Verified on November 10, 2026: 14 unit tests, 7 PostgreSQL integration tests,
-all three Docker services, browser workflows with QR scanning, and data persistence
-after container recreation. [Successful CI run](https://github.com/Buka2989/SecuritySystem/actions/runs/42821687984).
+This branch is the final Software Design Patterns project. It contains eight
+integrated patterns, a working GUI, demo data, automated tests and submission materials.
+Current verification is recorded in [docs/TESTING.md](docs/TESTING.md).
+The original migration's [successful CI run](https://github.com/Buka2989/SecuritySystem/actions/runs/42821687984)
+is retained as historical evidence; it does not replace this branch's checks.
 
 ## Architecture
 
@@ -26,7 +28,7 @@ Install Git, Docker Engine/Desktop with Linux containers, and Docker Compose v2.
 Local installations of Java, Maven, Node.js, and PostgreSQL are not required for Docker.
 
 ```sh
-git clone https://github.com/Buka2989/SecuritySystem.git
+git clone --branch design-patterns https://github.com/Buka2989/SecuritySystem.git
 cd SecuritySystem
 cp .env.example .env
 ```
@@ -131,7 +133,7 @@ deploying beyond the local machine.
 
 ## Development and testing
 
-Install JDK 21, Maven 3.9+, Node.js 22 with npm, and Docker for Testcontainers.
+Install JDK 21, Maven 3.9+, Node.js 22.12+ with npm, and Docker for Testcontainers.
 
 ```sh
 cd backend
@@ -143,7 +145,7 @@ npm run build
 npm run dev
 ```
 
-`mvn test` runs JWT, QR policy, and Python-format compatibility unit tests.
+`mvn test` runs JWT, QR policy, Python-format compatibility and design-pattern unit tests.
 `mvn verify` also runs `ApiIT` against a real PostgreSQL 18 instance through
 Testcontainers. Coverage includes authentication, roles, validation, student search,
 relationships, verification approval/rejection/resubmission, soft deletion and
@@ -170,3 +172,85 @@ scans of existing QR codes are recorded in PostgreSQL.
 Timestamps remain timezone-free for compatibility, so `APP_TIME_ZONE` must match
 the timezone used by the original Python process.
 There is no facial recognition or integration with government passport systems.
+
+## Design patterns branch
+
+The `design-patterns` branch extends the application with student editing,
+selectable contains/prefix search, review notifications, configurable QR lifetime,
+and access report downloads (CSV or JSON, optionally redacted). Existing API
+defaults and the PostgreSQL schema are preserved.
+
+| Pattern | Implementation and application role |
+|---|---|
+| Builder | `QrIssuePlan` validates and constructs a QR issuance plan |
+| Factory Method | `ReportExporter` subclasses create CSV/JSON documents |
+| Adapter | `AccessLogReportAdapter` converts persisted records into report entries |
+| Decorator | `RedactedReportSource` hides identifiers and names in exports |
+| Facade | `AccessReportFacade` coordinates report filtering, statistics and export |
+| Strategy | `ContainsSearch` and `PrefixSearch` implement user-selected search |
+| Observer | `ReviewPublisher` notifies inbox and audit subscribers after commit |
+| Visitor | `StatisticsVisitor` aggregates allowed and denied report entries |
+
+Review notifications are transient and bounded; persisted verification decisions
+remain the source of truth. A browser polls its own authenticated inbox and refreshes
+relationship status when a decision arrives. Reports are restricted to administrators
+and security staff; student changes require an administrator.
+
+### Demonstration data
+
+Use a separate, empty database volume for demonstrations. Set
+`SPRING_PROFILES_ACTIVE=demo` and `DEMO_PASSWORD` (at least 12 characters) in `.env`,
+then run `docker compose up -d --build`. The demo profile seeds `demo_admin`,
+`demo_parent`, `demo_guard`, and `demo_trusted` with that password, two students,
+pending/approved relationships, and allowed/denied access records. Seeding is skipped
+when users or students already exist. Never delete a working volume to enable demo mode.
+
+As administrator, create/edit a student. As parent, select a search mode, request a
+relationship, and wait for an administrator decision. The notification updates the
+dashboard; open the student, choose the QR lifetime, and generate a code. A guard
+can scan it once and inspect history. As guard or administrator, open the access
+report, choose dates, format and redaction, then download the result.
+
+Course requirements and outstanding team responsibilities are tracked in
+[the final project plan](docs/FINAL_PROJECT_PLAN.md). The confirmed allocation gives
+each of the four students two patterns. See the [requirements audit](docs/REQUIREMENTS_AUDIT.md)
+and [individual defense guide](docs/DEFENSE.md) for implementation evidence,
+demonstrations, tradeoffs and extension exercises.
+
+### Final submission materials
+
+- [English PDF report](output/pdf/security-system-report.pdf): scenarios, architecture,
+  eight-pattern table, UML, code excerpts, screenshots, test results and responsibilities.
+- [Editable UML](docs/uml): Mermaid sources and rendered SVG/PDF figures.
+- [Test results](docs/TESTING.md): inputs, expectations, actual outcomes and limitations.
+- `output/security-system-submission.zip`: source archive generated locally for Moodle.
+  It includes the report and excludes real `.env`, backups, dependencies and build caches.
+
+To regenerate the report and source archive, install Python 3.11+ with ReportLab and
+Pillow, then run from the repository root:
+
+```sh
+python -m pip install reportlab Pillow
+python scripts/build_report.py
+python scripts/package_submission.py
+```
+
+To run browser checks against an **isolated demo deployment**:
+
+```sh
+cd e2e
+npm ci
+npx playwright install chromium
+# Set E2E_ALLOW_WRITES=1, E2E_ADMIN_USERNAME=demo_admin,
+# and E2E_ADMIN_PASSWORD to your configured DEMO_PASSWORD.
+npm test
+```
+
+In PowerShell use `$env:E2E_ALLOW_WRITES='1'` and the same syntax for the other
+variables. Set `CAPTURE_REPORT=1` to refresh the five screenshots during the tests.
+Tests create synthetic accounts and pupils, so use a separate demonstration database.
+The UI is in Russian; the report and setup documentation are in English.
+
+AI assistance from OpenAI Codex was used for analysis, implementation support,
+tests and documentation. The report discloses this assistance. Students must
+understand, test and modify their allocated code and complete their own defense.

@@ -8,6 +8,7 @@ export function AddChildPage() {
   const { token } = useAuth();
   const navigate = useNavigate();
 
+  const [mode,setMode]=useState('contains');
   const [fullName, setFullName] = useState('');
   const [className, setClassName] = useState('');
   const [students, setStudents] = useState<Student[]>([]);
@@ -30,7 +31,8 @@ export function AddChildPage() {
       const results = await searchStudents(
         fullName.trim(),
         className.trim(),
-        token
+        token,
+        mode
       );
 
       if (results.length === 0) {
@@ -67,6 +69,7 @@ export function AddChildPage() {
 
       <section className="add-child-form">
         <form onSubmit={handleSearch}>
+<div className="form-group"><label htmlFor="search-mode">Режим поиска</label><select id="search-mode" value={mode} onChange={e=>setMode(e.target.value)}><option value="contains">Содержит текст</option><option value="prefix">Начинается с текста</option></select></div>
           <div className="form-group">
             <label htmlFor="fullName">ФИО</label>
             <input

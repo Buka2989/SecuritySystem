@@ -24,11 +24,13 @@ function mapStudent(data: BackendStudent): Student {
 export async function searchStudents(
   fullName: string,
   className: string,
-  token?: string | null
+  token?: string | null,
+  mode: string = 'contains'
 ): Promise<Student[]> {
   const params = new URLSearchParams({
     full_name: fullName,
     class_name: className,
+    mode,
   });
 
   const students = await apiRequest<BackendStudent[]>(
