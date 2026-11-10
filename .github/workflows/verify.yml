@@ -1,0 +1,75 @@
+name: Verify Java migration
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+          cache-dependency-path: backend/pom.xml
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Unit and PostgreSQL integration tests
+        run: mvn -B -f backend/pom.xml verify
+      - name: Create isolated test configuration
+        shell: bash
+        run: |
+          cp .env.example .env
+          printf '\nPOSTGRES_PASSWORD=%s\nJWT_SECRET_KEY=%s\nBOOTSTRAP_ADMIN_USERNAME=ci_admin\nBOOTSTRAP_ADMIN_PASSWORD=%s\n' "$(openssl rand -hex 24)" "$(openssl rand -hex 48)" "$(openssl rand -hex 24)" >> .env
+      - name: Build and run all three containers
+        run: docker compose up -d --build --wait --wait-timeout 180
+      - name: Health, Swagger and SPA routes
+        run: |
+          curl -fsS http://localhost:8080/health
+          curl -fsS http://localhost:8080/v3/api-docs > /tmp/openapi.json
+          curl -fsS http://localhost:8080/swagger-ui/index.html > /dev/null
+          for route in login dashboard add-child admin security; do curl -fsS "http://localhost:3000/$route" | grep -q 'id="root"'; done
+      - name: Install browser test dependencies
+        working-directory: e2e
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+      - name: Browser workflows and actual QR decoding
+        working-directory: e2e
+        shell: bash
+        run: |
+          export E2E_ALLOW_WRITES=1 E2E_ADMIN_USERNAME=ci_admin
+          export E2E_ADMIN_PASSWORD="$(grep '^BOOTSTRAP_ADMIN_PASSWORD=' ../.env | tail -1 | cut -d= -f2-)"
+          npm test
+      - name: Check persistence across container recreation
+        shell: bash
+        run: |
+          before=$(docker compose exec -T postgres sh -c 'psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -Atc "select count(*) from access_logs"')
+          test "$before" -ge 2
+          docker compose down
+          docker compose up -d --wait --wait-timeout 180
+          after=$(docker compose exec -T postgres sh -c 'psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -Atc "select count(*) from access_logs"')
+          test "$before" = "$after"
+          curl -fsS http://localhost:8080/health
+      - name: Container logs
+        if: always()
+        run: docker compose logs --no-color > docker-test.log 2>&1 || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: verification-reports
+          path: |
+            backend/target/surefire-reports
+            backend/target/failsafe-reports
+            e2e/playwright-report
+            e2e/test-results
+            docker-test.log
+      - name: Stop isolated CI containers
+        if: always()
+        run: docker compose down

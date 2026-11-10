@@ -1,0 +1,30 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://postgres:5432/${POSTGRES_DB}}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    serialization:
+      write-dates-as-timestamps: false
+  sql:
+    init:
+      mode: never
+app:
+  zone: ${APP_TIME_ZONE:Asia/Qyzylorda}
+  jwt-secret: ${JWT_SECRET_KEY}
+  jwt-algorithm: ${JWT_ALGORITHM:HS256}
+  jwt-expire-minutes: ${JWT_EXPIRE_MINUTES:60}
+  cors-origins: ${CORS_ORIGINS:http://localhost:3000,http://localhost:5173,https://localhost:5173}
+  bootstrap-admin:
+    username: ${BOOTSTRAP_ADMIN_USERNAME:}
+    password: ${BOOTSTRAP_ADMIN_PASSWORD:}
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
