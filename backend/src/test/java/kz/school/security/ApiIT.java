@@ -130,4 +130,29 @@ class ApiIT {
         }
         assertThat(jdbc.queryForObject("select count(*) from access_logs where qr_code_id=?",Integer.class,UUID.fromString(q.get("id").asText()))).isEqualTo(count);
     }
+    @Test void concurrentResubmissionCreatesOnlyOnePendingRequest() throws Exception {
+        String id=link().get("id").asText();
+        call("PATCH","/verification-requests/"+requestId(id)+"/reject",admin,Map.of("comment","retry"),200);
+        CountDownLatch start=new CountDownLatch(1);
+        try(var executor=Executors.newFixedThreadPool(4)) {
+            List<Future<Integer>> results=new ArrayList<>();
+            for(int i=0;i<4;i++)results.add(executor.submit(()->{
+                start.await();return mvc.perform(post("/verification-requests/").header("Authorization","Bearer "+parent)
+                    .contentType("application/json").content(json.writeValueAsBytes(Map.of("guardian_student_id",id)))).andReturn().getResponse().getStatus();
+            }));
+            start.countDown();List<Integer> statuses=new ArrayList<>();for(var f:results)statuses.add(f.get(30,TimeUnit.SECONDS));
+            assertThat(statuses).containsExactlyInAnyOrder(201,400,400,400);
+        }
+        assertThat(jdbc.queryForObject("select count(*) from verification_requests where guardian_student_id=? and status='PENDING'",Integer.class,UUID.fromString(id))).isEqualTo(1);
+    }
+    @Test void logWriteFailureRollsBackQrConsumption() throws Exception {
+        JsonNode q=approvedQr();
+        // Disposable test database only. Force the final audit insert to fail after setting USED.
+        jdbc.execute("ALTER TABLE access_logs ADD CONSTRAINT test_reject_allowed CHECK (result <> 'ALLOWED')");
+        try {
+            call("POST","/qr-codes/verify",guard,Map.of("token",q.get("token").asText()),409);
+            assertThat(jdbc.queryForObject("select status from qr_codes where id=?",String.class,UUID.fromString(q.get("id").asText()))).isEqualTo("ACTIVE");
+        } finally { jdbc.execute("ALTER TABLE access_logs DROP CONSTRAINT test_reject_allowed"); }
+        assertThat(scan(q,guard).get("reason").asText()).isEqualTo("VALID_QR");
+    }
 }

@@ -35,6 +35,12 @@ test('all existing pages: parent request, admin approval, real QR decoding, guar
   adminPage.on('pageerror',e=>errors.push(e.message));
   await login(adminPage,adminName,adminPassword);await expect(adminPage).toHaveURL(/\/admin$/);
   const card=adminPage.locator('article').filter({hasText:student.full_name});
+  adminPage.once('dialog',d=>d.accept('E2E: please resubmit'));
+  await card.getByRole('button',{name:'Отклонить',exact:true}).click();
+  await expect(card.getByRole('button',{name:'Отклонить',exact:true})).toHaveCount(0);
+  await page.reload();await page.getByRole('button',{name:'Подать заявку повторно'}).click();
+  await expect(page.getByText('На рассмотрении',{exact:true})).toBeVisible();
+  await adminPage.reload();
   await card.getByRole('button',{name:'Одобрить',exact:true}).click();
   await expect(card.getByRole('button',{name:'Одобрить',exact:true})).toHaveCount(0);
   await page.reload(); await page.getByText(student.full_name,{exact:true}).click();
