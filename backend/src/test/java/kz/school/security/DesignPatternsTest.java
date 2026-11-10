@@ -57,4 +57,25 @@ class DesignPatternsTest {
         UUID id=UUID.randomUUID();publisher.dispatch(new ReviewEvent(id,UUID.randomUUID(),"REJECTED","Reason"));assertThat(inbox.forGuardian(id)).hasSize(1);
         publisher.unsubscribe(inbox);publisher.dispatch(new ReviewEvent(id,UUID.randomUUID(),"APPROVED",null));assertThat(inbox.forGuardian(id)).hasSize(1);
     }
+    @Test void rolledBackReviewDoesNotNotifyGuardian(){
+        var inbox=new ReviewInbox();var publisher=new ReviewPublisher(List.of(inbox));UUID guardian=UUID.randomUUID();
+        TransactionSynchronizationManager.initSynchronization();
+        try {
+            publisher.publishAfterCommit(new ReviewEvent(guardian,UUID.randomUUID(),"APPROVED",null));
+            TransactionSynchronizationManager.getSynchronizations().forEach(s->s.afterCompletion(TransactionSynchronization.STATUS_ROLLED_BACK));
+            assertThat(inbox.forGuardian(guardian)).isEmpty();
+        } finally { TransactionSynchronizationManager.clearSynchronization(); }
+        assertThatThrownBy(()->publisher.publishAfterCommit(new ReviewEvent(guardian,UUID.randomUUID(),"APPROVED",null)))
+            .isInstanceOf(IllegalStateException.class);
+    }
+    @Test void facadeFiltersDatesInclusivelyAndRejectsInvalidOptions(){
+        ReportSource source=()->List.of(allowed,denied);
+        var facade=new AccessReportFacade(source,List.of(new CsvReportExporter()));
+        assertThat(facade.summary(time.toLocalDate(),time.toLocalDate()).total()).isEqualTo(2);
+        assertThat(facade.summary(time.toLocalDate().plusDays(1),null).total()).isZero();
+        assertThatThrownBy(()->facade.summary(time.toLocalDate().plusDays(1),time.toLocalDate()))
+            .isInstanceOf(kz.school.security.exception.ApiException.class).hasMessageContaining("Start date");
+        assertThatThrownBy(()->facade.export("xml",null,null,false))
+            .isInstanceOf(kz.school.security.exception.ApiException.class).hasMessageContaining("Unsupported");
+    }
 }

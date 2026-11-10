@@ -1,0 +1,42 @@
+classDiagram
+  class StudentSearchStrategy {
+    <<interface>>
+    +key() String
+    +search(name, className) List~Student~
+  }
+  StudentSearchStrategy <|.. ContainsSearch
+  StudentSearchStrategy <|.. PrefixSearch
+  StudentService --> StudentSearchStrategy : selects
+  ContainsSearch --> StudentRepository
+  PrefixSearch --> StudentRepository
+  QrService --> QrIssuePlan.Builder : configures
+  QrIssuePlan.Builder ..> QrIssuePlan : builds
+  QrIssuePlan ..> QrCode : issues
+  VerificationService --> ReviewPublisher : publishAfterCommit
+  ReviewPublisher o-- ReviewSubscriber : notifies
+  ReviewSubscriber <|.. ReviewInbox
+  ReviewSubscriber <|.. ReviewAuditSubscriber
+  ReviewInbox ..> ReviewEvent : receives
+  ReportController --> AccessReportFacade
+  AccessReportFacade --> ReportSource : reads
+  AccessReportFacade --> RedactedReportSource : optional
+  AccessReportFacade --> StatisticsVisitor : summary
+  AccessReportFacade --> ReportExporter : export
+  ReportSource <|.. AccessLogReportAdapter
+  ReportSource <|.. RedactedReportSource
+  RedactedReportSource o-- ReportSource : wraps
+  AccessLogReportAdapter --> AccessLogRepository : adapts persisted data
+  ReportExporter <|-- CsvReportExporter
+  ReportExporter <|-- JsonReportExporter
+  CsvReportExporter ..> CsvReportDocument : creates
+  JsonReportExporter ..> JsonReportDocument : creates
+  ReportDocument <|.. CsvReportDocument
+  ReportDocument <|.. JsonReportDocument
+  ReportExporter --> ReportDocument : renders
+  ReportSource --> ReportEntry : supplies
+  ReportEntry <|.. Allowed
+  ReportEntry <|.. Denied
+  ReportEntry --> ReportVisitor : accept
+  ReportVisitor <|.. StatisticsVisitor
+  StatisticsVisitor --> Allowed : visit
+  StatisticsVisitor --> Denied : visit

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="483" height="595" preserveAspectRatio="xMinYMin meet" viewBox="0 0 483 595" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="483" height="595"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-595)" style="clip-path: url(#clip)">
+		<g transform="">
+			<rect x="0" y="526" width="175" height="56" rx="4" ry="4" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(92%,95%,97%); fill-rule: evenodd;"/>
+			<text x="7" y="568" style="font-family: Helvetica-Bold; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,1136) scale(1,-1)">AccessReportFacade</text>
+			<path d="M 0,561 L 175,561 Z" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="7" y="548" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,1096) scale(1,-1)">+ summary(from, to)</text>
+			<text x="7" y="536" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,1072) scale(1,-1)">+ export(format, redact)</text>
+			<rect x="290" y="526" width="190" height="56" rx="4" ry="4" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(92%,95%,97%); fill-rule: evenodd;"/>
+			<text x="297" y="568" style="font-family: Helvetica-Bold; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,1136) scale(1,-1)">&lt;&lt;interface&gt;&gt; ReportSource</text>
+			<path d="M 290,561 L 480,561 Z" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="297" y="548" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,1096) scale(1,-1)">+ entries(): List&lt;ReportEntry&gt;</text>
+			<path d="M 175,554 L 290,554 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="290 554, 283.5526 556.7259, 283.5526 551.2741" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(32%,38%,45%); fill-rule: evenodd;"/>
+			<text x="235.5" y="559.0" style="font-family: Helvetica; font-size: 7px;fill: rgb(32%,38%,45%); stroke:none;" transform="translate(0,1118) scale(1,-1)">reads</text>
+			<rect x="0" y="420" width="195" height="60" rx="4" ry="4" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(92%,95%,97%); fill-rule: evenodd;"/>
+			<text x="7" y="466" style="font-family: Helvetica-Bold; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,932) scale(1,-1)">AccessLogReportAdapter</text>
+			<path d="M 0,459 L 195,459 Z" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="7" y="446" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,892) scale(1,-1)">- repositories: existing model</text>
+			<text x="7" y="434" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,868) scale(1,-1)">+ entries()</text>
+			<rect x="285" y="420" width="195" height="60" rx="4" ry="4" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(92%,95%,97%); fill-rule: evenodd;"/>
+			<text x="292" y="466" style="font-family: Helvetica-Bold; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,932) scale(1,-1)">RedactedReportSource</text>
+			<path d="M 285,459 L 480,459 Z" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="292" y="446" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,892) scale(1,-1)">- wrapped: ReportSource</text>
+			<text x="292" y="434" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,868) scale(1,-1)">+ entries(): redacted copy</text>
+			<path d="M 130,480 L 335,526 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; stroke-dasharray: 3, 2;"/>
+			<polygon points="335 526, 328.1122 527.2482, 329.3058 521.9286" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<path d="M 384,480 L 384,526 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; stroke-dasharray: 3, 2;"/>
+			<polygon points="384 526, 381.2741 519.5526, 386.7259 519.5526" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="7" y="401" style="font-family: Helvetica; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,802) scale(1,-1)">Adapter: relational records to typed entries</text>
+			<text x="288" y="401" style="font-family: Helvetica; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,802) scale(1,-1)">Decorator: wraps another ReportSource</text>
+			<rect x="0" y="300" width="190" height="64" rx="4" ry="4" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(92%,95%,97%); fill-rule: evenodd;"/>
+			<text x="7" y="350" style="font-family: Helvetica-Bold; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,700) scale(1,-1)">ReportExporter (abstract)</text>
+			<path d="M 0,343 L 190,343 Z" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="7" y="330" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,660) scale(1,-1)">+ export(entries): Export</text>
+			<text x="7" y="318" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,636) scale(1,-1)"># createDocument(): Document</text>
+			<rect x="290" y="300" width="190" height="64" rx="4" ry="4" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(92%,95%,97%); fill-rule: evenodd;"/>
+			<text x="297" y="350" style="font-family: Helvetica-Bold; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,700) scale(1,-1)">&lt;&lt;interface&gt;&gt; ReportDocument</text>
+			<path d="M 290,343 L 480,343 Z" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="297" y="330" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,660) scale(1,-1)">+ render(entries): bytes</text>
+			<path d="M 190,332 L 290,332 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="290 332, 283.5526 334.7259, 283.5526 329.2741" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(32%,38%,45%); fill-rule: evenodd;"/>
+			<text x="243.0" y="337.0" style="font-family: Helvetica; font-size: 7px;fill: rgb(32%,38%,45%); stroke:none;" transform="translate(0,674) scale(1,-1)">renders</text>
+			<rect x="0" y="205" width="190" height="52" rx="4" ry="4" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(92%,95%,97%); fill-rule: evenodd;"/>
+			<text x="7" y="243" style="font-family: Helvetica-Bold; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,486) scale(1,-1)">Csv / JsonReportExporter</text>
+			<path d="M 0,236 L 190,236 Z" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="7" y="223" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,446) scale(1,-1)"># createDocument()</text>
+			<rect x="290" y="205" width="190" height="52" rx="4" ry="4" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(92%,95%,97%); fill-rule: evenodd;"/>
+			<text x="297" y="243" style="font-family: Helvetica-Bold; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,486) scale(1,-1)">Csv / JsonReportDocument</text>
+			<path d="M 290,236 L 480,236 Z" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="297" y="223" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,446) scale(1,-1)">+ render(entries)</text>
+			<path d="M 95,257 L 95,300 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="95 300, 92.27407 293.5526, 97.72593 293.5526" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<path d="M 385,257 L 385,300 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; stroke-dasharray: 3, 2;"/>
+			<polygon points="385 300, 382.2741 293.5526, 387.7259 293.5526" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<path d="M 190,231 L 290,231 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="290 231, 283.5526 233.7259, 283.5526 228.2741" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(32%,38%,45%); fill-rule: evenodd;"/>
+			<text x="243.0" y="236.0" style="font-family: Helvetica; font-size: 7px;fill: rgb(32%,38%,45%); stroke:none;" transform="translate(0,472) scale(1,-1)">creates</text>
+			<text x="7" y="186" style="font-family: Helvetica; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,372) scale(1,-1)">Factory Method: each exporter creates its concrete product</text>
+			<rect x="0" y="90" width="190" height="60" rx="4" ry="4" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(92%,95%,97%); fill-rule: evenodd;"/>
+			<text x="7" y="136" style="font-family: Helvetica-Bold; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,272) scale(1,-1)">&lt;&lt;interface&gt;&gt; ReportEntry</text>
+			<path d="M 0,129 L 190,129 Z" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="7" y="116" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,232) scale(1,-1)">+ accept(visitor)</text>
+			<text x="7" y="104" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,208) scale(1,-1)">Allowed / Denied implement</text>
+			<rect x="290" y="90" width="190" height="60" rx="4" ry="4" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(92%,95%,97%); fill-rule: evenodd;"/>
+			<text x="297" y="136" style="font-family: Helvetica-Bold; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,272) scale(1,-1)">&lt;&lt;interface&gt;&gt; ReportVisitor</text>
+			<path d="M 290,129 L 480,129 Z" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="297" y="116" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,232) scale(1,-1)">+ visit(Allowed)</text>
+			<text x="297" y="104" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,208) scale(1,-1)">+ visit(Denied)</text>
+			<path d="M 190,120 L 290,120 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="290 120, 283.5526 122.7259, 283.5526 117.2741" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(32%,38%,45%); fill-rule: evenodd;"/>
+			<text x="243.0" y="125.0" style="font-family: Helvetica; font-size: 7px;fill: rgb(32%,38%,45%); stroke:none;" transform="translate(0,250) scale(1,-1)">accept</text>
+			<rect x="290" y="0" width="190" height="53" rx="4" ry="4" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(92%,95%,97%); fill-rule: evenodd;"/>
+			<text x="297" y="39" style="font-family: Helvetica-Bold; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,78) scale(1,-1)">StatisticsVisitor</text>
+			<path d="M 290,32 L 480,32 Z" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="297" y="19" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,38) scale(1,-1)">+ summary(): counts, reasons</text>
+			<path d="M 385,53 L 385,90 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; stroke-dasharray: 3, 2;"/>
+			<polygon points="385 90, 382.2741 83.55257, 387.7259 83.55257" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="7" y="29" style="font-family: Helvetica; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,58) scale(1,-1)">Facade coordinates the participants above.</text>
+			<text x="7" y="15" style="font-family: Helvetica; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,30) scale(1,-1)">Visitor dispatches by entry type.</text>
+		</g>
+	</g>
+</svg>

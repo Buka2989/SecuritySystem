@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="483" height="585" preserveAspectRatio="xMinYMin meet" viewBox="0 0 483 585" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="483" height="585"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-585)" style="clip-path: url(#clip)">
+		<g transform="">
+			<rect x="1" y="542" width="73" height="31" rx="4" ry="4" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(92%,95%,97%); fill-rule: evenodd;"/>
+			<text x="8" y="559" style="font-family: Helvetica-Bold; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,1118) scale(1,-1)">Users</text>
+			<path d="M 37,20 L 37,542 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.5; stroke-dasharray: 3, 3;"/>
+			<rect x="102" y="542" width="73" height="31" rx="4" ry="4" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(92%,95%,97%); fill-rule: evenodd;"/>
+			<text x="109" y="559" style="font-family: Helvetica-Bold; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,1118) scale(1,-1)">React UI</text>
+			<path d="M 138,20 L 138,542 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.5; stroke-dasharray: 3, 3;"/>
+			<rect x="203" y="542" width="73" height="31" rx="4" ry="4" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(92%,95%,97%); fill-rule: evenodd;"/>
+			<text x="210" y="559" style="font-family: Helvetica-Bold; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,1118) scale(1,-1)">Java services</text>
+			<path d="M 239,20 L 239,542 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.5; stroke-dasharray: 3, 3;"/>
+			<rect x="304" y="542" width="73" height="31" rx="4" ry="4" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(92%,95%,97%); fill-rule: evenodd;"/>
+			<text x="311" y="559" style="font-family: Helvetica-Bold; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,1118) scale(1,-1)">PostgreSQL</text>
+			<path d="M 340,20 L 340,542 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.5; stroke-dasharray: 3, 3;"/>
+			<rect x="405" y="542" width="73" height="31" rx="4" ry="4" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(92%,95%,97%); fill-rule: evenodd;"/>
+			<text x="412" y="559" style="font-family: Helvetica-Bold; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,1118) scale(1,-1)">Review inbox</text>
+			<path d="M 441,20 L 441,542 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.5; stroke-dasharray: 3, 3;"/>
+			<path d="M 37,520 L 138,520 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="138 520, 131.5526 522.7259, 131.5526 517.2741" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(32%,38%,45%); fill-rule: evenodd;"/>
+			<text x="5" y="525" style="font-family: Helvetica; font-size: 6.8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,1050) scale(1,-1)">01  Parent selects pupil, requests relationship</text>
+			<path d="M 138,496 L 239,496 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="239 496, 232.5526 498.7259, 232.5526 493.2741" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(32%,38%,45%); fill-rule: evenodd;"/>
+			<text x="5" y="501" style="font-family: Helvetica; font-size: 6.8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,1002) scale(1,-1)">02  POST /guardian-students/</text>
+			<path d="M 239,472 L 340,472 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="340 472, 333.5526 474.7259, 333.5526 469.2741" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(32%,38%,45%); fill-rule: evenodd;"/>
+			<text x="5" y="477" style="font-family: Helvetica; font-size: 6.8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,954) scale(1,-1)">03  Save link + pending request; commit</text>
+			<path d="M 37,448 L 138,448 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="138 448, 131.5526 450.7259, 131.5526 445.2741" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(32%,38%,45%); fill-rule: evenodd;"/>
+			<text x="5" y="453" style="font-family: Helvetica; font-size: 6.8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,906) scale(1,-1)">04  Administrator approves</text>
+			<path d="M 138,424 L 239,424 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="239 424, 232.5526 426.7259, 232.5526 421.2741" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(32%,38%,45%); fill-rule: evenodd;"/>
+			<text x="5" y="429" style="font-family: Helvetica; font-size: 6.8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,858) scale(1,-1)">05  PATCH request /approve</text>
+			<path d="M 239,400 L 340,400 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="340 400, 333.5526 402.7259, 333.5526 397.2741" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(32%,38%,45%); fill-rule: evenodd;"/>
+			<text x="5" y="405" style="font-family: Helvetica; font-size: 6.8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,810) scale(1,-1)">06  Lock link; update decision; COMMIT</text>
+			<path d="M 239,376 L 441,376 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="441 376, 434.5526 378.7259, 434.5526 373.2741" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(32%,38%,45%); fill-rule: evenodd;"/>
+			<text x="5" y="381" style="font-family: Helvetica; font-size: 6.8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,762) scale(1,-1)">07  afterCommit: publish ReviewEvent</text>
+			<path d="M 138,352 L 441,352 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="441 352, 434.5526 354.7259, 434.5526 349.2741" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(32%,38%,45%); fill-rule: evenodd;"/>
+			<text x="5" y="357" style="font-family: Helvetica; font-size: 6.8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,714) scale(1,-1)">08  Poll authenticated /notifications</text>
+			<path d="M 441,328 L 138,328 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="138 328, 144.4474 325.2741, 144.4474 330.7259" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(32%,38%,45%); fill-rule: evenodd;"/>
+			<text x="5" y="333" style="font-family: Helvetica; font-size: 6.8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,666) scale(1,-1)">09  Notice; refresh dashboard</text>
+			<path d="M 37,304 L 138,304 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="138 304, 131.5526 306.7259, 131.5526 301.2741" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(32%,38%,45%); fill-rule: evenodd;"/>
+			<text x="5" y="309" style="font-family: Helvetica; font-size: 6.8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,618) scale(1,-1)">10  Parent selects 5-minute QR</text>
+			<path d="M 138,280 L 239,280 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="239 280, 232.5526 282.7259, 232.5526 277.2741" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(32%,38%,45%); fill-rule: evenodd;"/>
+			<text x="5" y="285" style="font-family: Helvetica; font-size: 6.8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,570) scale(1,-1)">11  POST QR; Builder creates issue plan</text>
+			<path d="M 239,256 L 340,256 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="340 256, 333.5526 258.7259, 333.5526 253.2741" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(32%,38%,45%); fill-rule: evenodd;"/>
+			<text x="5" y="261" style="font-family: Helvetica; font-size: 6.8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,522) scale(1,-1)">12  Persist ACTIVE QR; commit</text>
+			<path d="M 37,232 L 138,232 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="138 232, 131.5526 234.7259, 131.5526 229.2741" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(32%,38%,45%); fill-rule: evenodd;"/>
+			<text x="5" y="237" style="font-family: Helvetica; font-size: 6.8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,474) scale(1,-1)">13  Guard scans QR</text>
+			<path d="M 138,208 L 239,208 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="239 208, 232.5526 210.7259, 232.5526 205.2741" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(32%,38%,45%); fill-rule: evenodd;"/>
+			<text x="5" y="213" style="font-family: Helvetica; font-size: 6.8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,426) scale(1,-1)">14  POST /qr-codes/verify</text>
+			<path d="M 239,184 L 340,184 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="340 184, 333.5526 186.7259, 333.5526 181.2741" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(32%,38%,45%); fill-rule: evenodd;"/>
+			<text x="5" y="189" style="font-family: Helvetica; font-size: 6.8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,378) scale(1,-1)">15  Lock QR; USED + ALLOWED log; commit</text>
+			<path d="M 37,160 L 138,160 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="138 160, 131.5526 162.7259, 131.5526 157.2741" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(32%,38%,45%); fill-rule: evenodd;"/>
+			<text x="5" y="165" style="font-family: Helvetica; font-size: 6.8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,330) scale(1,-1)">16  Guard repeats scan</text>
+			<path d="M 239,136 L 340,136 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="340 136, 333.5526 138.7259, 333.5526 133.2741" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(32%,38%,45%); fill-rule: evenodd;"/>
+			<text x="5" y="141" style="font-family: Helvetica; font-size: 6.8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,282) scale(1,-1)">17  DENIED / QR_ALREADY_USED; commit</text>
+			<path d="M 138,112 L 239,112 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="239 112, 232.5526 114.7259, 232.5526 109.2741" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(32%,38%,45%); fill-rule: evenodd;"/>
+			<text x="5" y="117" style="font-family: Helvetica; font-size: 6.8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,234) scale(1,-1)">18  GET report/export?format=json&amp;redact=true</text>
+			<path d="M 239,88 L 340,88 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="340 88, 333.5526 90.72593, 333.5526 85.27407" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(32%,38%,45%); fill-rule: evenodd;"/>
+			<text x="5" y="93" style="font-family: Helvetica; font-size: 6.8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,186) scale(1,-1)">19  Adapter reads persisted records</text>
+			<path d="M 239,64 L 138,64 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="138 64, 144.4474 61.27407, 144.4474 66.72593" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(32%,38%,45%); fill-rule: evenodd;"/>
+			<text x="5" y="69" style="font-family: Helvetica; font-size: 6.8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,138) scale(1,-1)">20  Decorate + factory document; download</text>
+		</g>
+	</g>
+</svg>

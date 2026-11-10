@@ -11,3 +11,8 @@
 *.dump
 .idea/
 .vscode/
+tmp/
+*-verification.log
+output/*.zip
+scripts/__pycache__/
+frontend/pnpm-lock.yaml

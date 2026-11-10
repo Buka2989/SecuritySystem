@@ -10,3 +10,6 @@
 **/test-results
 **/playwright-report
 databases/import
+tmp
+output
+*-verification.log

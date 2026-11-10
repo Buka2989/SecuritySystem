@@ -1,6 +1,7 @@
 import { useEffect,useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { apiRequest,API_BASE_URL } from '@/services/api';
+import { responseError } from '@/services/api/client';
 interface Summary {total:number;allowed:number;denied:number;denial_reasons:Record<string,number>}
 export function AccessReportPage(){
   const {token}=useAuth();const [from,setFrom]=useState('');const [to,setTo]=useState('');
@@ -12,7 +13,7 @@ export function AccessReportPage(){
   async function download(){setBusy(true);setError('');try{
     const p=params();p.set('format',format);p.set('redact',String(redact));
     const response=await fetch(`${API_BASE_URL}/reports/access/export?${p}`,{headers:{Authorization:`Bearer ${token}`}});
-    if(!response.ok)throw new Error(await response.text());
+    if(!response.ok)throw await responseError(response);
     const url=URL.createObjectURL(await response.blob());const a=document.createElement('a');a.href=url;a.download=`access-report.${format}`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
   }catch(e){setError(e instanceof Error?e.message:'Ошибка экспорта');}finally{setBusy(false);}}
   return <main className="page"><h1 className="page__title">Отчёт о доступе</h1><section className="detail-card">

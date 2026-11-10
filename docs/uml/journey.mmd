@@ -1,0 +1,34 @@
+sequenceDiagram
+  actor Parent
+  actor Admin
+  actor Guard
+  participant UI as React UI
+  participant API as Java services
+  participant DB as PostgreSQL
+  participant Events as ReviewPublisher / Inbox
+  Parent->>UI: Select student, configure relationship
+  UI->>API: POST /guardian-students/
+  API->>DB: Save relationship and pending request
+  DB-->>UI: Pending relationship
+  Admin->>UI: Approve request
+  UI->>API: PATCH /verification-requests/{id}/approve
+  API->>DB: Lock relationship, update request, commit
+  API->>Events: afterCommit: dispatch ReviewEvent
+  UI->>Events: GET /notifications (private inbox, every 3s)
+  Events-->>UI: Notice triggers dashboard refresh
+  Parent->>UI: Configure 5-minute QR
+  UI->>API: POST /qr-codes/ (expires_in_minutes=5)
+  API->>API: QrIssuePlan.Builder.build().issue(token)
+  API->>DB: Save active QR
+  Guard->>UI: Scan QR
+  UI->>API: POST /qr-codes/verify
+  API->>DB: Lock relationship and QR; mark USED; insert ALLOWED; commit
+  DB-->>UI: Access result
+  Guard->>UI: Repeat scan
+  UI->>API: POST /qr-codes/verify
+  API->>DB: Insert DENIED / QR_ALREADY_USED; commit
+  Guard->>UI: Export redacted JSON report
+  UI->>API: GET /reports/access/export?format=json&redact=true
+  API->>DB: Read access logs and linked records
+  API->>API: Adapter -> Decorator -> Factory Method -> document
+  API-->>UI: Download access-report.json

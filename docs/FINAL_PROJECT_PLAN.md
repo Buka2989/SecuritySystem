@@ -25,15 +25,16 @@ an access report.
 
 ## Responsibility allocation
 
-The team will provide the allocation. No independent implementation is attributed
-to a student until actual contributions have been confirmed.
+The team confirmed this responsibility allocation. Each student owns two patterns,
+their tests, demonstration and explanation at the individual defense. This allocation
+does not assert that AI-assisted code was independently authored by a student.
 
 | Student | Patterns | Application responsibility |
 |---|---|---|
-| Aldiyar Adilkhan | Awaiting team allocation | Awaiting team allocation |
-| Baktiyar Kaiyrzhan | Awaiting team allocation | Awaiting team allocation |
-| Bauyrzhan Muratkhanov | Awaiting team allocation | Awaiting team allocation |
-| Zhalgas Sarsenov | Awaiting team allocation | Awaiting team allocation |
+| Aldiyar Adilkhan | Factory Method, Strategy | CSV/JSON document creation and selectable student search |
+| Baktiyar Kaiyrzhan | Builder, Observer | QR configuration and review event delivery |
+| Bauyrzhan Muratkhanov | Decorator, Adapter | Report privacy and mapping persisted access records |
+| Zhalgas Sarsenov | Facade, Visitor | Report orchestration and access statistics |
 
 Patterns must appear in executed application paths, with tests and demonstration
 steps. Framework implementations alone are not counted.
@@ -44,4 +45,5 @@ The supplied assignment requires independent implementation, an individual defen
 weekly progress presentations, and disclosure of tools and external materials.
 The repository can supply working features, documentation, and preparation exercises;
 it cannot establish that each student independently wrote code or attended presentations.
-Actual contributions and the final disclosure section must be confirmed by the team.
+The report discloses Codex assistance. Each member must verify their own contribution,
+understand and modify their allocated patterns, and complete the individual defense.

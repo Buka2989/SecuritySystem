@@ -1,0 +1,57 @@
+[
+  {
+    "input": "Main journey: request, reject/resubmit, approve, issue QR, scan twice.",
+    "expected": "First scan ALLOWED; repeated scan DENIED; both saved.",
+    "actual": "PASS - workflow.spec.js; actual QR pixels decoded."
+  },
+  {
+    "input": "Search Test Child with Child in contains/prefix modes; edit class.",
+    "expected": "Contains returns one; prefix zero; edited class reloads.",
+    "actual": "PASS - ApiIT and patterns.spec.js."
+  },
+  {
+    "input": "Commit approval; roll back a queued review; read another inbox.",
+    "expected": "Only owner receives committed notice; rollback is silent.",
+    "actual": "PASS - Observer unit/API tests and live UI notification."
+  },
+  {
+    "input": "Recreate all Compose containers without removing volume.",
+    "expected": "All six tables retain row counts and full content.",
+    "actual": "PASS - six table checksums match."
+  },
+  {
+    "input": "Export two or more saved scans as CSV/JSON; toggle redaction.",
+    "expected": "Valid documents; hidden names/IDs; original data unchanged.",
+    "actual": "PASS - API, factory/decorator tests and browser downloads."
+  },
+  {
+    "input": "Issue QR for 5 minutes; try 0 and 1,441 minutes.",
+    "expected": "Five-minute interval; invalid lifetimes rejected with 422.",
+    "actual": "PASS - Builder tests and ApiIT."
+  },
+  {
+    "input": "Blank student name/class; deactivate a linked student.",
+    "expected": "Blank data rejected with 422; issue/scan disallowed when inactive.",
+    "actual": "PASS - student editing and inactive-pupil API tests."
+  },
+  {
+    "input": "Unknown search mode, XML export, reversed date range.",
+    "expected": "422 and readable errors; inclusive same-day filters work.",
+    "actual": "PASS - Facade/API tests and browser error assertions."
+  },
+  {
+    "input": "Parent requests staff reports; another guardian revokes QR.",
+    "expected": "403 for staff resource; foreign QR is not exposed (404).",
+    "actual": "PASS - role/ownership API tests."
+  },
+  {
+    "input": "Eight concurrent scans; four simultaneous resubmissions.",
+    "expected": "Exactly one ALLOWED and one new pending request.",
+    "actual": "PASS - concurrent ApiIT scenarios."
+  },
+  {
+    "input": "Force final access-log insert to violate a database constraint.",
+    "expected": "409; consumption rolled back to ACTIVE; next scan succeeds.",
+    "actual": "PASS - transaction rollback ApiIT."
+  }
+]

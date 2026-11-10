@@ -82,6 +82,19 @@ class ApiIT {
         assertThat(call("GET","/notifications",other,null,200)).hasSize(0);
         call("GET","/notifications",guard,null,403);
     }
+    @Test void configuredQrLifetimeAndInactiveStudentRules() throws Exception {
+        String id=link().get("id").asText();
+        call("PATCH","/verification-requests/"+requestId(id)+"/approve",admin,null,200);
+        for(int minutes:new int[]{0,1441})
+            call("POST","/qr-codes/",parent,Map.of("guardian_student_id",id,"expires_in_minutes",minutes),422);
+        var q=call("POST","/qr-codes/",parent,Map.of("guardian_student_id",id,"expires_in_minutes",5),201);
+        assertThat(Duration.between(LocalDateTime.parse(q.get("created_at").asText()),LocalDateTime.parse(q.get("expires_at").asText())))
+            .isEqualTo(Duration.ofMinutes(5));
+        String sid=call("GET","/guardian-students/",parent,null,200).get(0).get("student_id").asText();
+        call("PATCH","/students/"+sid,admin,Map.of("full_name","Test Child","class_name","5A","status","INACTIVE"),200);
+        call("POST","/qr-codes/",parent,Map.of("guardian_student_id",id),403);
+        assertThat(scan(q,guard).get("reason").asText()).isEqualTo("NOT_VERIFIED");
+    }
     @Test void reportFacadeAdaptsDecoratesAndExportsPersistedScans() throws Exception {
         var q=approvedQr();scan(q,guard);scan(q,guard);
         JsonNode summary=call("GET","/reports/access",admin,null,200);

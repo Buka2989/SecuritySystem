@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="483" height="590" preserveAspectRatio="xMinYMin meet" viewBox="0 0 483 590" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="483" height="590"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-590)" style="clip-path: url(#clip)">
+		<g transform="">
+			<text x="0" y="577" style="font-family: Helvetica-Bold; font-size: 11px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,1154) scale(1,-1)">Strategy: user-selected search</text>
+			<rect x="0" y="487" width="145" height="62" rx="4" ry="4" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(92%,95%,97%); fill-rule: evenodd;"/>
+			<text x="7" y="535" style="font-family: Helvetica-Bold; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,1070) scale(1,-1)">StudentService</text>
+			<path d="M 0,528 L 145,528 Z" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="7" y="515" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,1030) scale(1,-1)">+ search(name, class, mode)</text>
+			<rect x="215" y="487" width="265" height="62" rx="4" ry="4" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(92%,95%,97%); fill-rule: evenodd;"/>
+			<text x="222" y="535" style="font-family: Helvetica-Bold; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,1070) scale(1,-1)">&lt;&lt;interface&gt;&gt; StudentSearchStrategy</text>
+			<path d="M 215,528 L 480,528 Z" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="222" y="515" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,1030) scale(1,-1)">+ key(): String</text>
+			<text x="222" y="503" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,1006) scale(1,-1)">+ search(): List&lt;Student&gt;</text>
+			<path d="M 145,519 L 215,519 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="215 519, 208.5526 521.7259, 208.5526 516.2741" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(32%,38%,45%); fill-rule: evenodd;"/>
+			<text x="183.0" y="524.0" style="font-family: Helvetica; font-size: 7px;fill: rgb(32%,38%,45%); stroke:none;" transform="translate(0,1048) scale(1,-1)">selects</text>
+			<rect x="215" y="390" width="125" height="52" rx="4" ry="4" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(92%,95%,97%); fill-rule: evenodd;"/>
+			<text x="222" y="428" style="font-family: Helvetica-Bold; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,856) scale(1,-1)">ContainsSearch</text>
+			<path d="M 215,421 L 340,421 Z" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="222" y="408" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,816) scale(1,-1)">+ search()</text>
+			<rect x="355" y="390" width="125" height="52" rx="4" ry="4" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(92%,95%,97%); fill-rule: evenodd;"/>
+			<text x="362" y="428" style="font-family: Helvetica-Bold; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,856) scale(1,-1)">PrefixSearch</text>
+			<path d="M 355,421 L 480,421 Z" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="362" y="408" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,816) scale(1,-1)">+ search()</text>
+			<path d="M 277,442 L 277,487 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; stroke-dasharray: 3, 2;"/>
+			<polygon points="277 487, 274.2741 480.5526, 279.7259 480.5526" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<path d="M 417,442 L 417,487 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; stroke-dasharray: 3, 2;"/>
+			<polygon points="417 487, 414.2741 480.5526, 419.7259 480.5526" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="0" y="357" style="font-family: Helvetica-Bold; font-size: 11px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,714) scale(1,-1)">Builder: validated QR plan</text>
+			<rect x="0" y="274" width="125" height="62" rx="4" ry="4" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(92%,95%,97%); fill-rule: evenodd;"/>
+			<text x="7" y="322" style="font-family: Helvetica-Bold; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,644) scale(1,-1)">QrService</text>
+			<path d="M 0,315 L 125,315 Z" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="7" y="302" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,604) scale(1,-1)">+ create(actor, options)</text>
+			<rect x="171" y="274" width="147" height="62" rx="4" ry="4" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(92%,95%,97%); fill-rule: evenodd;"/>
+			<text x="178" y="322" style="font-family: Helvetica-Bold; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,644) scale(1,-1)">QrIssuePlan.Builder</text>
+			<path d="M 171,315 L 318,315 Z" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="178" y="302" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,604) scale(1,-1)">+ validForMinutes(n)</text>
+			<text x="178" y="290" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,580) scale(1,-1)">+ build(): QrIssuePlan</text>
+			<rect x="359" y="274" width="121" height="62" rx="4" ry="4" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(92%,95%,97%); fill-rule: evenodd;"/>
+			<text x="366" y="322" style="font-family: Helvetica-Bold; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,644) scale(1,-1)">QrIssuePlan</text>
+			<path d="M 359,315 L 480,315 Z" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="366" y="302" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,604) scale(1,-1)">+ issue(token): QrCode</text>
+			<path d="M 125,304 L 171,304 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="171 304, 164.5526 306.7259, 164.5526 301.2741" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(32%,38%,45%); fill-rule: evenodd;"/>
+			<text x="151.0" y="309.0" style="font-family: Helvetica; font-size: 7px;fill: rgb(32%,38%,45%); stroke:none;" transform="translate(0,618) scale(1,-1)">uses</text>
+			<path d="M 318,304 L 359,304 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="359 304, 352.5526 306.7259, 352.5526 301.2741" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(32%,38%,45%); fill-rule: evenodd;"/>
+			<text x="341.5" y="309.0" style="font-family: Helvetica; font-size: 7px;fill: rgb(32%,38%,45%); stroke:none;" transform="translate(0,618) scale(1,-1)">builds</text>
+			<text x="0" y="239" style="font-family: Helvetica-Bold; font-size: 11px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,478) scale(1,-1)">Observer: dispatch after transaction commit</text>
+			<rect x="0" y="150" width="145" height="62" rx="4" ry="4" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(92%,95%,97%); fill-rule: evenodd;"/>
+			<text x="7" y="198" style="font-family: Helvetica-Bold; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,396) scale(1,-1)">VerificationService</text>
+			<path d="M 0,191 L 145,191 Z" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="7" y="178" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,356) scale(1,-1)">+ review(id, decision)</text>
+			<rect x="215" y="150" width="265" height="62" rx="4" ry="4" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(92%,95%,97%); fill-rule: evenodd;"/>
+			<text x="222" y="198" style="font-family: Helvetica-Bold; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,396) scale(1,-1)">ReviewPublisher</text>
+			<path d="M 215,191 L 480,191 Z" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="222" y="178" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,356) scale(1,-1)">+ publishAfterCommit(event)</text>
+			<text x="222" y="166" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,332) scale(1,-1)">+ subscribe() / unsubscribe()</text>
+			<path d="M 145,181 L 215,181 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="215 181, 208.5526 183.7259, 208.5526 178.2741" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(32%,38%,45%); fill-rule: evenodd;"/>
+			<text x="183.0" y="186.0" style="font-family: Helvetica; font-size: 7px;fill: rgb(32%,38%,45%); stroke:none;" transform="translate(0,372) scale(1,-1)">publishes</text>
+			<rect x="215" y="63" width="265" height="50" rx="4" ry="4" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(92%,95%,97%); fill-rule: evenodd;"/>
+			<text x="222" y="99" style="font-family: Helvetica-Bold; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,198) scale(1,-1)">&lt;&lt;interface&gt;&gt; ReviewSubscriber</text>
+			<path d="M 215,92 L 480,92 Z" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="222" y="79" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,158) scale(1,-1)">+ onReview(event)</text>
+			<path d="M 349,150 L 349,113 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<polygon points="349 113, 351.7259 119.4474, 346.2741 119.4474" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(32%,38%,45%); fill-rule: evenodd;"/>
+			<text x="352.0" y="136.5" style="font-family: Helvetica; font-size: 7px;fill: rgb(32%,38%,45%); stroke:none;" transform="translate(0,273) scale(1,-1)">notifies 0..*</text>
+			<rect x="0" y="0" width="180" height="42" rx="4" ry="4" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(92%,95%,97%); fill-rule: evenodd;"/>
+			<text x="7" y="28" style="font-family: Helvetica-Bold; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,56) scale(1,-1)">ReviewInbox</text>
+			<path d="M 0,21 L 180,21 Z" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="7" y="8" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,16) scale(1,-1)">+ forGuardian(id)</text>
+			<rect x="300" y="0" width="180" height="42" rx="4" ry="4" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(92%,95%,97%); fill-rule: evenodd;"/>
+			<text x="307" y="28" style="font-family: Helvetica-Bold; font-size: 8px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,56) scale(1,-1)">ReviewAuditSubscriber</text>
+			<path d="M 300,21 L 480,21 Z" style="stroke: rgb(9%,20%,32%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="307" y="8" style="font-family: Helvetica; font-size: 7px;fill: rgb(9%,20%,32%); stroke:none;" transform="translate(0,16) scale(1,-1)">+ onReview(event)</text>
+			<path d="M 180,23 L 238,63 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; stroke-dasharray: 3, 2;"/>
+			<polygon points="238 63, 231.1448 61.5836, 234.24 57.09556" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<path d="M 389,42 L 389,63 Z" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; stroke-dasharray: 3, 2;"/>
+			<polygon points="389 63, 386.2741 56.55257, 391.7259 56.55257" style="stroke: rgb(32%,38%,45%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+		</g>
+	</g>
+</svg>
