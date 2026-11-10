@@ -4,6 +4,10 @@
 на Spring Boot с сохранением React-интерфейса и PostgreSQL. Анализ исходника,
 контракты всех 21 операции и отличия: [docs/MIGRATION.md](docs/MIGRATION.md).
 
+Проверено 10 ноября 2026: 14 unit + 7 PostgreSQL integration tests, Docker-запуск
+трёх сервисов, браузерные сценарии с QR и сохранность данных после пересоздания
+контейнеров. [Успешный CI](https://github.com/Buka2989/SecuritySystem/actions/runs/42821687984).
+
 ## Архитектура
 
 - `backend/`: Java 21, Spring Boot 3.5, Web, JPA, Security, Validation, Maven,
