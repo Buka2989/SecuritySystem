@@ -1,28 +1,29 @@
 # Security System — Java 21 / Spring Boot
 
-Перенос [SecuritySystemv2](https://github.com/AldairRonin/SecuritySystemv2) с FastAPI
-на Spring Boot с сохранением React-интерфейса и PostgreSQL. Анализ исходника,
-контракты всех 21 операции и отличия: [docs/MIGRATION.md](docs/MIGRATION.md).
+A migration of [SecuritySystemv2](https://github.com/AldairRonin/SecuritySystemv2)
+from FastAPI to Spring Boot, preserving the React interface and PostgreSQL schema.
+The source analysis, all 21 original API operations, and documented changes are
+available in [docs/MIGRATION.md](docs/MIGRATION.md) (in Russian).
 
-Проверено 10 ноября 2026: 14 unit + 7 PostgreSQL integration tests, Docker-запуск
-трёх сервисов, браузерные сценарии с QR и сохранность данных после пересоздания
-контейнеров. [Успешный CI](https://github.com/Buka2989/SecuritySystem/actions/runs/42821687984).
+Verified on November 10, 2026: 14 unit tests, 7 PostgreSQL integration tests,
+all three Docker services, browser workflows with QR scanning, and data persistence
+after container recreation. [Successful CI run](https://github.com/Buka2989/SecuritySystem/actions/runs/42821687984).
 
-## Архитектура
+## Architecture
 
-- `backend/`: Java 21, Spring Boot 3.5, Web, JPA, Security, Validation, Maven,
-  PostgreSQL JDBC, Argon2id, JWT HS256/384/512, Swagger/OpenAPI.
-- `frontend/`: исходный React + TypeScript + Vite, роли PARENT, TRUSTED_PERSON,
-  SECURITY, ADMIN. В контейнере статика обслуживается Nginx.
-- `databases/`: схема предоставленной резервной копии без данных; восстановление
-  custom-format backup в новый PostgreSQL volume.
+- `backend/`: Java 21, Spring Boot 3.5, Spring Web, Data JPA, Security, Validation,
+  Maven, PostgreSQL JDBC, Argon2id, JWT HS256/384/512, and Swagger/OpenAPI.
+- `frontend/`: the existing React + TypeScript + Vite application for PARENT,
+  TRUSTED_PERSON, SECURITY, and ADMIN users. Nginx serves the production build.
+- `databases/`: the schema extracted from the supplied backup, without personal
+  data, and initialization support for restoring a custom-format PostgreSQL backup.
 - `docker-compose.yml`: postgres → backend:8080 → frontend:80.
-  Браузер обращается к `/api/`, Nginx удаляет только этот префикс.
+  The browser sends requests to `/api/`; Nginx strips that prefix before forwarding.
 
-## Запуск
+## Getting started
 
-Нужны Git, Docker Engine/Desktop с Linux containers и Docker Compose v2.
-Локальные Java, Maven, Node и PostgreSQL для Docker-запуска не нужны.
+Install Git, Docker Engine/Desktop with Linux containers, and Docker Compose v2.
+Local installations of Java, Maven, Node.js, and PostgreSQL are not required for Docker.
 
 ```sh
 git clone https://github.com/Buka2989/SecuritySystem.git
@@ -30,71 +31,85 @@ cd SecuritySystem
 cp .env.example .env
 ```
 
-В PowerShell вместо `cp` можно использовать `Copy-Item .env.example .env`.
-Настройте POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD, JWT_SECRET_KEY.
-Замените все примерные секреты. Для HS256 нужно не менее 32 случайных байт,
-HS384 — 48, HS512 — 64. Например: `openssl rand -hex 32`.
-`JWT_EXPIRE_MINUTES` управляет сроком JWT; APP_TIME_ZONE — зоной naive timestamp.
-Реальный `.env`, резервные копии, персональные данные исключены из Git.
+In PowerShell, you can use `Copy-Item .env.example .env`.
+Set `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD`, and `JWT_SECRET_KEY`.
+Replace all example secrets. HS256 requires a key of at least 32 bytes; HS384
+requires 48, and HS512 requires 64. Use randomly generated key material, for example
+`openssl rand -hex 32` for HS256.
+`JWT_EXPIRE_MINUTES` controls JWT lifetime. `APP_TIME_ZONE` determines how timestamps
+without a timezone are interpreted. Real `.env` files and database backups are
+excluded from Git; do not commit personal data.
 
-### С существующей резервной копией
+### Starting with an existing backup
 
-Перед **первым** запуском положите `security_backup.backup` в `databases/import/`.
-Будет восстановлена полная копия данных, UUID, связей и существующих Argon2-паролей.
-Оригинальная БД не изменяется. При восстановлении не применяются владельцы и GRANT
-из исходной машины; владельцем становится POSTGRES_USER.
+Before the **first** start, place `security_backup.backup` in `databases/import/`.
+Initialization restores the data, UUIDs, relationships, and existing Argon2 password
+hashes into a new database volume. The original database remains untouched.
+Original ownership and GRANT statements are omitted; `POSTGRES_USER` becomes the owner.
 
 ```sh
 docker compose up -d --build
 docker compose ps
 ```
 
-### С пустой базой
+### Starting with an empty database
 
-Если backup отсутствует, создаются только исходные шесть таблиц. Для первого входа
-укажите BOOTSTRAP_ADMIN_USERNAME и BOOTSTRAP_ADMIN_PASSWORD (от 12 символов).
-Администратор создаётся **только если users пуста**. Существующие аккаунты и пароли
-не обновляются. После первого запуска эти две переменные можно очистить.
-
-- Интерфейс: http://localhost:3000
-- API / health: http://localhost:8080/health
-- Swagger: http://localhost:8080/swagger-ui/index.html
-- OpenAPI JSON: http://localhost:8080/v3/api-docs
-
-В Swagger выполните POST /auth/login, скопируйте access_token в Authorize.
-Регистрация PARENT/TRUSTED_PERSON — POST /users/. Администратор тем же endpoint
-создаёт SECURITY/ADMIN, создаёт учеников через POST /students/. В исходном React
-нет форм регистрации и управления пользователями; API доступны через Swagger.
-Доверенное лицо подаёт собственную связь с учеником на одобрение.
-
-## Хранение и импорт данных
-
-Именованный volume `postgres_data` переживает restart, down и повторную сборку.
-Init выполняется только при пустом PGDATA. Не используйте `docker compose down -v`
-для рабочей базы. Замена backup в import после первого запуска ничего не перезаписывает.
-Для проверки другого backup создавайте отдельный Compose project с отдельными
-портами/volume; не очищайте рабочий volume.
-
-Рабочая схема берётся из backup, а не из устаревшего securitysys.sql. Hibernate
-проверяет её с `ddl-auto=validate`, не создаёт и не меняет таблицы.
-Перенос существующего физического PostgreSQL volume между major версиями запрещён;
-используйте логический backup/restore. Compose использует PostgreSQL 18 и путь
-volume `/var/lib/postgresql`, соответствующий этому образу.
+If no backup is present, initialization creates the six original tables without
+sample data. To create the first administrator, set `BOOTSTRAP_ADMIN_USERNAME`
+and `BOOTSTRAP_ADMIN_PASSWORD` (at least 12 characters), then run the same command:
 
 ```sh
-# Интерактивный SQL внутри контейнера
+docker compose up -d --build
+```
+
+The administrator is created **only when the users table is empty**. Existing
+accounts and passwords are never overwritten. You can clear the bootstrap variables
+after the first successful start.
+
+- Frontend: [localhost:3000](http://localhost:3000)
+- API health: [localhost:8080/health](http://localhost:8080/health)
+- Swagger UI: [localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+- OpenAPI JSON: [localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs)
+
+In Swagger, call `POST /auth/login`, then paste the returned `access_token` into
+**Authorize**. Public registration through `POST /users/` supports PARENT and
+TRUSTED_PERSON accounts. An administrator uses the same endpoint to create SECURITY
+and ADMIN accounts, and `POST /students/` to create students.
+The original React application has no registration or user-management forms;
+these operations are available through the API and Swagger. A trusted person
+submits their own relationship with a student for administrator approval.
+
+## Data storage and import
+
+The named `postgres_data` volume survives restarts, `docker compose down`, and image
+rebuilds. Initialization runs only when PGDATA is empty. Do not use
+`docker compose down -v` on a database whose data you need to keep.
+Replacing the backup file after the first start does not overwrite existing data.
+To test another backup, use a separate Compose project with separate ports and a
+separate volume.
+
+The working schema comes from the supplied backup, not the outdated `securitysys.sql`.
+Hibernate uses `ddl-auto=validate` and does not create or modify tables.
+Do not directly reuse a physical PostgreSQL data volume across major versions;
+use a logical backup and restore. Compose uses PostgreSQL 18 and mounts its data
+volume at `/var/lib/postgresql`, as required by that image.
+
+```sh
+# Open an interactive SQL session inside the container.
 docker compose exec postgres sh -c 'psql -U "$POSTGRES_USER" -d "$POSTGRES_DB"'
-# Резервная копия без бинарного перенаправления через PowerShell
+
+# Create a backup without piping binary data through PowerShell.
 docker compose exec postgres sh -c 'pg_dump -U "$POSTGRES_USER" -d "$POSTGRES_DB" -Fc -f /tmp/security_backup.backup'
 docker compose cp postgres:/tmp/security_backup.backup ./security_backup.backup
 ```
 
-Порт PostgreSQL не публикуется наружу. Backend подключается к `postgres:5432`.
-Для локального запуска вне Docker задайте DATABASE_URL вида
-`jdbc:postgresql://127.0.0.1:5432/security_system` и отдельные POSTGRES_USER/PASSWORD.
-URL формата SQLAlchemy `postgresql+psycopg://...` нужно заменить на JDBC URL.
+PostgreSQL is not exposed on a host port. The backend connects to `postgres:5432`.
+For development outside Docker, set `DATABASE_URL` to a JDBC URL such as
+`jdbc:postgresql://127.0.0.1:5432/security_system` and configure `POSTGRES_USER`
+and `POSTGRES_PASSWORD` separately. Replace SQLAlchemy URLs such as
+`postgresql+psycopg://...` with JDBC URLs.
 
-## Остановка и диагностика
+## Stopping services and troubleshooting
 
 ```sh
 docker compose logs -f backend
@@ -104,17 +119,19 @@ docker compose start
 docker compose down
 ```
 
-Healthcheck PostgreSQL ждёт готовности БД; backend health выполняет SELECT 1;
-frontend запускается после успешного backend health. Ошибка схемы останавливает
-backend и требует проверки импортированной БД, а не автоматического изменения таблиц.
+The PostgreSQL healthcheck waits for database readiness. The backend healthcheck
+runs `SELECT 1`, and the frontend starts after the backend becomes healthy.
+A schema validation failure prevents backend startup: inspect the imported schema
+instead of enabling automatic schema changes.
 
-Для камеры на `localhost:3000` разрешите доступ браузеру. Доступ с другого устройства
-по LAN требует HTTPS: браузер не предоставляет камеру по обычному HTTP IP-адресу.
-Для развёртывания вне локальной машины настройте TLS на reverse proxy.
+Allow camera access in your browser when using `localhost:3000`. Access from a
+different device over a LAN requires HTTPS because browsers do not provide camera
+access over ordinary HTTP IP addresses. Configure TLS at the reverse proxy when
+deploying beyond the local machine.
 
-## Разработка и тестирование
+## Development and testing
 
-Нужны JDK 21, Maven 3.9+, Node 22/npm, Docker для Testcontainers.
+Install JDK 21, Maven 3.9+, Node.js 22 with npm, and Docker for Testcontainers.
 
 ```sh
 cd backend
@@ -126,25 +143,30 @@ npm run build
 npm run dev
 ```
 
-`mvn test` — unit-тесты JWT и QR-политики. `mvn verify` дополнительно запускает
-ApiIT на настоящем PostgreSQL 18 через Testcontainers: auth, роли, validation,
-поиск, связи, заявки, approve/reject/resubmit, soft delete/restore, QR expiry/revoke,
-повторное и конкурентное сканирование, журналы. Отсутствие Docker не приводит
-к молчаливому пропуску интеграционных тестов.
+`mvn test` runs JWT, QR policy, and Python-format compatibility unit tests.
+`mvn verify` also runs `ApiIT` against a real PostgreSQL 18 instance through
+Testcontainers. Coverage includes authentication, roles, validation, student search,
+relationships, verification approval/rejection/resubmission, soft deletion and
+restoration, QR expiry and revocation, repeated and concurrent scans, audit logs,
+concurrent resubmission, and transaction rollback when an audit insert fails.
+Integration tests are not silently skipped when Docker is unavailable.
 
-Для отдельного локального тестового PostgreSQL можно задать TEST_DATABASE_URL,
-TEST_DATABASE_USER, TEST_DATABASE_PASSWORD. URL обязан оканчиваться `/security_test`;
-база должна быть новой и пустой. Тесты создают схему и очищают таблицы между сценариями.
-Никогда не указывайте рабочую БД.
+Alternatively, configure `TEST_DATABASE_URL`, `TEST_DATABASE_USER`, and
+`TEST_DATABASE_PASSWORD` for a dedicated local PostgreSQL test database.
+The URL must end with `/security_test`, and the database must be new and empty.
+Tests initialize its schema and clear tables between scenarios. Never point these
+variables at a working database.
 
-GitHub Actions собирает и запускает все три Docker-сервиса, выполняет API и браузерные
-тесты, проверяет данные после down/up и сохраняет отчёты. Текущий результат проверок
-указан в [docs/TESTING.md](docs/TESTING.md); наличие конфигурации само по себе не
-означает успешное прохождение.
+GitHub Actions builds and starts all three Docker services, runs API and browser
+tests, checks persistence after container recreation, and uploads reports.
+Detailed results and test limitations are recorded in
+[docs/TESTING.md](docs/TESTING.md) (in Russian).
 
-## Известные ограничения исходной модели
+## Known limitations inherited from the original model
 
-Неизвестный QR нельзя сохранить в access_logs без изменения обязательного FK:
-такие попытки пишутся в журнал backend; сканирования существующих QR — в PostgreSQL.
-Даты сохранены без timezone для совместимости; APP_TIME_ZONE должен соответствовать
-старому Python-процессу. Распознавания лиц и государственных паспортных интеграций нет.
+Unknown QR tokens cannot be inserted into `access_logs` without changing its
+mandatory foreign key. Those attempts are recorded in backend application logs;
+scans of existing QR codes are recorded in PostgreSQL.
+Timestamps remain timezone-free for compatibility, so `APP_TIME_ZONE` must match
+the timezone used by the original Python process.
+There is no facial recognition or integration with government passport systems.
