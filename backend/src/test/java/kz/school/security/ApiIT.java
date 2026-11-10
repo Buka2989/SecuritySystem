@@ -64,6 +64,37 @@ class ApiIT {
     String requestId(String link) throws Exception { for(JsonNode r:call("GET","/verification-requests/",admin,null,200))if(r.get("guardian_student_id").asText().equals(link)&&r.get("status").asText().equals("PENDING"))return r.get("id").asText();throw new AssertionError("Missing request"); }
     JsonNode approvedQr() throws Exception { String id=link().get("id").asText();call("PATCH","/verification-requests/"+requestId(id)+"/approve",admin,null,200);return call("POST","/qr-codes/",parent,Map.of("guardian_student_id",id),201); }
     JsonNode scan(JsonNode q,String actor) throws Exception { return call("POST","/qr-codes/verify",actor,Map.of("token",q.get("token").asText()),200); }
+    @Test void selectableSearchAndStudentEditing() throws Exception {
+        JsonNode s=student();String id=s.get("id").asText();
+        assertThat(call("GET","/students/search?full_name=Child&class_name=5A&mode=contains",parent,null,200)).hasSize(1);
+        assertThat(call("GET","/students/search?full_name=Child&class_name=5A&mode=prefix",parent,null,200)).hasSize(0);
+        assertThat(call("GET","/students/search?full_name=Test&class_name=5A&mode=prefix",parent,null,200)).hasSize(1);
+        call("GET","/students/search?full_name=Test&class_name=5A&mode=unknown",parent,null,422);
+        call("PATCH","/students/"+id,parent,Map.of("full_name","Changed","class_name","6A"),403);
+        call("PATCH","/students/"+id,admin,Map.of("full_name","Changed","class_name","6A","status","INACTIVE"),200);
+        assertThat(call("GET","/students/"+id,admin,null,200).get("class_name").asText()).isEqualTo("6A");
+        call("PATCH","/students/"+id,admin,Map.of("full_name"," ","class_name",""),422);
+    }
+    @Test void reviewTriggersPrivateNotification() throws Exception {
+        String id=link().get("id").asText();call("PATCH","/verification-requests/"+requestId(id)+"/approve",admin,null,200);
+        JsonNode notices=call("GET","/notifications",parent,null,200);assertThat(notices).hasSize(1);
+        assertThat(notices.get(0).get("status").asText()).isEqualTo("APPROVED");
+        assertThat(call("GET","/notifications",other,null,200)).hasSize(0);
+        call("GET","/notifications",guard,null,403);
+    }
+    @Test void reportFacadeAdaptsDecoratesAndExportsPersistedScans() throws Exception {
+        var q=approvedQr();scan(q,guard);scan(q,guard);
+        JsonNode summary=call("GET","/reports/access",admin,null,200);
+        assertThat(summary.get("total").asInt()).isEqualTo(2);assertThat(summary.get("allowed").asInt()).isEqualTo(1);
+        JsonNode redacted=call("GET","/reports/access/export?format=json&redact=true",guard,null,200);
+        assertThat(redacted.get(0).get("guardian").asText()).isEqualTo("Hidden");
+        assertThat(call("GET","/reports/access/export?format=json",admin,null,200).get(0).get("student").asText()).isEqualTo("Test Child");
+        var csv=mvc.perform(get("/reports/access/export?format=csv").header("Authorization","Bearer "+admin)).andReturn().getResponse();
+        assertThat(csv.getStatus()).isEqualTo(200);assertThat(csv.getContentAsString()).contains("VALID_QR","QR_ALREADY_USED");
+        call("GET","/reports/access",parent,null,403);call("GET","/reports/access/export?format=xml",admin,null,422);
+        call("GET","/reports/access?from=2026-12-01&to=2026-01-01",admin,null,422);
+        assertThat(call("GET","/reports/access?to=2000-01-01",admin,null,200).get("total").asInt()).isZero();
+    }
     @Test void authenticationRolesAndValidation() throws Exception {
         assertThat(call("GET","/auth/me",parent,null,200).get("username").asText()).isEqualTo("parent");
         assertThat(call("GET","/auth/me",parent,null,200).has("password_hash")).isFalse();

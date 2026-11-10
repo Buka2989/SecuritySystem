@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+import { ReviewNotifications } from '@/components/ReviewNotifications';
 import type { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
@@ -24,7 +26,11 @@ export function Layout({ children }: { children: ReactNode }) {
           </div>
         )}
       </header>
-      {children}
+      <nav className="page__header" style={{padding:'12px 24px'}}>
+        {user?.role==='ADMIN' && <><Link to="/admin">Заявки</Link><Link to="/manage-students">Ученики</Link></>}
+        {user?.role==='SECURITY' && <Link to="/security">Сканирование</Link>}
+        {(user?.role==='ADMIN'||user?.role==='SECURITY') && <Link to="/reports">Отчёт о доступе</Link>}
+      </nav><ReviewNotifications />{children}
     </div>
   );
 }

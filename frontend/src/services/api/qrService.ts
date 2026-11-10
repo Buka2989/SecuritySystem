@@ -47,13 +47,14 @@ export async function getLatestQrForGuardianStudent(
 export async function generateQr(
   guardianStudentId: string,
   token?: string | null,
+  minutes: number = 15,
 ): Promise<QrCode> {
   const qr = await apiRequest<BackendQrCode>('/qr-codes/', {
     method: 'POST',
     token,
     body: {
       guardian_student_id: guardianStudentId,
-      expires_in_minutes: 15,
+      expires_in_minutes: minutes,
     },
   });
 

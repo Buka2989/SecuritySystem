@@ -16,9 +16,10 @@ public class VerificationService {
     private final StudentRepository students;
     private final GuardianService guardians;
     private final Clock clock;
+    private final kz.school.security.patterns.events.ReviewPublisher events;
     public VerificationService(VerificationRequestRepository requests, GuardianStudentRepository links, UserRepository users,
-                               StudentRepository students, GuardianService guardians, Clock clock) {
-        this.requests=requests; this.links=links; this.users=users; this.students=students; this.guardians=guardians; this.clock=clock;
+                               StudentRepository students, GuardianService guardians, Clock clock, kz.school.security.patterns.events.ReviewPublisher events) {
+        this.requests=requests; this.links=links; this.users=users; this.students=students; this.guardians=guardians; this.clock=clock;this.events=events;
     }
     public List<AdminVerificationResponse> list() {
         return requests.findAllByOrderByCreatedAtDesc().stream().map(r -> {
@@ -42,6 +43,8 @@ public class VerificationService {
         if (!"PENDING".equals(r.status)) throw new ApiException(400,"Verification request is already processed");
         if (!link.isActive) throw new ApiException(400,"Student is already removed");
         r.status=approve?"APPROVED":"REJECTED"; r.reviewedAt=LocalDateTime.now(clock); if (!approve) r.comment=comment;
-        link.verificationStatus=r.status; return DtoMapper.verification(r);
+        link.verificationStatus=r.status;
+        events.publishAfterCommit(new kz.school.security.patterns.events.ReviewEvent(link.guardianId,link.id,r.status,r.comment));
+        return DtoMapper.verification(r);
     }
 }

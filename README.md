@@ -170,3 +170,46 @@ scans of existing QR codes are recorded in PostgreSQL.
 Timestamps remain timezone-free for compatibility, so `APP_TIME_ZONE` must match
 the timezone used by the original Python process.
 There is no facial recognition or integration with government passport systems.
+
+## Design patterns branch
+
+The `design-patterns` branch extends the application with student editing,
+selectable contains/prefix search, review notifications, configurable QR lifetime,
+and access report downloads (CSV or JSON, optionally redacted). Existing API
+defaults and the PostgreSQL schema are preserved.
+
+| Pattern | Implementation and application role |
+|---|---|
+| Builder | `QrIssuePlan` validates and constructs a QR issuance plan |
+| Factory Method | `ReportExporter` subclasses create CSV/JSON documents |
+| Adapter | `AccessLogReportAdapter` converts persisted records into report entries |
+| Decorator | `RedactedReportSource` hides identifiers and names in exports |
+| Facade | `AccessReportFacade` coordinates report filtering, statistics and export |
+| Strategy | `ContainsSearch` and `PrefixSearch` implement user-selected search |
+| Observer | `ReviewPublisher` notifies inbox and audit subscribers after commit |
+| Visitor | `StatisticsVisitor` aggregates allowed and denied report entries |
+
+Review notifications are transient and bounded; persisted verification decisions
+remain the source of truth. A browser polls its own authenticated inbox and refreshes
+relationship status when a decision arrives. Reports are restricted to administrators
+and security staff; student changes require an administrator.
+
+### Demonstration data
+
+Use a separate, empty database volume for demonstrations. Set
+`SPRING_PROFILES_ACTIVE=demo` and `DEMO_PASSWORD` (at least 12 characters) in `.env`,
+then run `docker compose up -d --build`. The demo profile seeds `demo_admin`,
+`demo_parent`, `demo_guard`, and `demo_trusted` with that password, two students,
+pending/approved relationships, and allowed/denied access records. Seeding is skipped
+when users or students already exist. Never delete a working volume to enable demo mode.
+
+As administrator, create/edit a student. As parent, select a search mode, request a
+relationship, and wait for an administrator decision. The notification updates the
+dashboard; open the student, choose the QR lifetime, and generate a code. A guard
+can scan it once and inspect history. As guard or administrator, open the access
+report, choose dates, format and redaction, then download the result.
+
+Course requirements and outstanding team responsibilities are tracked in
+[the final project plan](docs/FINAL_PROJECT_PLAN.md). Pattern allocation and actual
+individual contributions await the team's confirmation. The PDF report, UML diagrams
+and submission ZIP are not yet complete.

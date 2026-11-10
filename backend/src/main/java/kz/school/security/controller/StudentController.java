@@ -16,7 +16,10 @@ public class StudentController {
     public StudentController(StudentService service) { this.service=service; }
     @GetMapping({"","/"}) public List<StudentResponse> list() { return service.list(); }
     @GetMapping("/search") public List<StudentResponse> search(@RequestParam("full_name") @Size(min=2) String name,
-        @RequestParam("class_name") @Size(min=1) String className) { return service.search(name,className); }
+        @RequestParam("class_name") @Size(min=1) String className,
+        @RequestParam(value="mode",defaultValue="contains") String mode) { return service.search(name,className,mode); }
+    @PatchMapping("/{id}") @PreAuthorize("hasRole('ADMIN')")
+    public StudentResponse update(@PathVariable UUID id,@Valid @RequestBody StudentCreate data) { return service.update(id,data); }
     @GetMapping("/{id}") public StudentResponse get(@PathVariable UUID id) { return service.get(id); }
     @PostMapping({"","/"}) @ResponseStatus(HttpStatus.CREATED) @PreAuthorize("hasRole('ADMIN')")
     public StudentResponse create(@Valid @RequestBody StudentCreate data) { return service.create(data); }
