@@ -16,9 +16,10 @@ public class VerificationService {
     private final StudentRepository students;
     private final GuardianService guardians;
     private final Clock clock;
+    private final NotificationService notifications;
     public VerificationService(VerificationRequestRepository requests, GuardianStudentRepository links, UserRepository users,
-                               StudentRepository students, GuardianService guardians, Clock clock) {
-        this.requests=requests; this.links=links; this.users=users; this.students=students; this.guardians=guardians; this.clock=clock;
+                               StudentRepository students, GuardianService guardians, Clock clock, NotificationService notifications) {
+        this.requests=requests; this.links=links; this.users=users; this.students=students; this.guardians=guardians; this.clock=clock; this.notifications=notifications;
     }
     public List<AdminVerificationResponse> list() {
         return requests.findAllByOrderByCreatedAtDesc().stream().map(r -> {
@@ -42,6 +43,12 @@ public class VerificationService {
         if (!"PENDING".equals(r.status)) throw new ApiException(400,"Verification request is already processed");
         if (!link.isActive) throw new ApiException(400,"Student is already removed");
         r.status=approve?"APPROVED":"REJECTED"; r.reviewedAt=LocalDateTime.now(clock); if (!approve) r.comment=comment;
-        link.verificationStatus=r.status; return DtoMapper.verification(r);
+        link.verificationStatus=r.status;
+        String title = approve ? "Заявка одобрена" : "Заявка отклонена";
+        String message = approve
+            ? "Администратор подтвердил вашу связь с учеником."
+            : "Администратор отклонил заявку. Причина: " + (comment == null || comment.isBlank() ? "не указана" : comment);
+        notifications.createInApp(link.guardianId, title, message);
+        return DtoMapper.verification(r);
     }
 }
