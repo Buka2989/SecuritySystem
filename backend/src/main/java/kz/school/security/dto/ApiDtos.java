@@ -29,4 +29,5 @@ public final class ApiDtos {
         public static VerifyResponse denied(String reason) { return new VerifyResponse("DENIED",reason,null,null,null,null); }
     }
     public record LogResponse(UUID id, UUID qrCodeId, UUID securityUserId, String action, String result, String reason, LocalDateTime createdAt) {}
+    public record NotificationResponse(UUID id, String title, String message, String type, boolean isRead, LocalDateTime createdAt) {}
 }
