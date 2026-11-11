@@ -20,7 +20,7 @@ test('all existing pages: parent request, admin approval, real QR decoding, guar
   const parentContext=await browser.newContext(); const page=await parentContext.newPage();
   page.on('pageerror',e=>errors.push(e.message));
   async function login(page,name,pw) {
-    await page.goto('/login');await page.getByLabel('Имя пользователя').fill(name);await page.getByLabel('Пароль').fill(pw);
+    await page.goto('/login');await page.getByLabel('Имя пользователя').fill(name);await page.getByLabel('Пароль',{exact:true}).fill(pw);
     await page.getByRole('button',{name:'Войти',exact:true}).click();
   }
   await login(page,names.parent,password);

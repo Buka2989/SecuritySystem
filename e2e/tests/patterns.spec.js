@@ -11,7 +11,7 @@ test('student editing, selectable search, review notification and export options
   const adminToken=(await api('POST','/auth/login',null,{username:process.env.E2E_ADMIN_USERNAME,password:process.env.E2E_ADMIN_PASSWORD})).access_token;
   const parentName='patterns_parent_'+suffix;
   await api('POST','/users/',adminToken,{username:parentName,password,role:'PARENT',full_name:'Demo Guardian'},201);
-  async function login(page,name,pw){await page.goto('/login');await page.getByLabel('Имя пользователя').fill(name);await page.getByLabel('Пароль').fill(pw);await page.getByRole('button',{name:'Войти',exact:true}).click();}
+  async function login(page,name,pw){await page.goto('/login');await page.getByLabel('Имя пользователя').fill(name);await page.getByLabel('Пароль',{exact:true}).fill(pw);await page.getByRole('button',{name:'Войти',exact:true}).click();}
   async function capture(page,name){if(process.env.CAPTURE_REPORT==='1'){await fs.mkdir('../docs/screenshots',{recursive:true});await page.evaluate(()=>window.scrollTo(0,0));await page.screenshot({path:`../docs/screenshots/${name}.png`,fullPage:false});}}
   const adminContext=await browser.newContext({viewport:{width:1280,height:900}});const admin=await adminContext.newPage();
   await login(admin,process.env.E2E_ADMIN_USERNAME,process.env.E2E_ADMIN_PASSWORD);
