@@ -70,16 +70,15 @@ after the first successful start.
 
 By default, Compose publishes these local addresses:
 
-- Frontend: [localhost:3000](http://localhost:3000)
-- API health: [localhost:8080/health](http://localhost:8080/health)
-- Swagger UI: [localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
-- OpenAPI JSON: [localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs)
+- Frontend: [localhost:3002](http://localhost:3002)
+- API health: [localhost:8081/health](http://localhost:8081/health)
+- Swagger UI: [localhost:8081/swagger-ui/index.html](http://localhost:8081/swagger-ui/index.html)
+- OpenAPI JSON: [localhost:8081/v3/api-docs](http://localhost:8081/v3/api-docs)
 
 If these host ports are already occupied, change only the host-side port mappings
 in `docker-compose.yml` (keep the container-side ports `80` and `8080` unchanged).
-For example, map frontend `3002:80` and backend `127.0.0.1:8081:8080`, then use
-`http://localhost:3002` for the frontend and `http://localhost:8081` for the API
-and Swagger. Use the same selected ports consistently in your local setup.
+If you change the frontend host port, update `CORS_ORIGINS` in `.env` to match
+the frontend address you use.
 
 In Swagger, call `POST /auth/login`, then paste the returned `access_token` into
 **Authorize**. Public registration through `POST /users/` supports PARENT and
@@ -134,12 +133,15 @@ runs `SELECT 1`, and the frontend starts after the backend becomes healthy.
 A schema validation failure prevents backend startup: inspect the imported schema
 instead of enabling automatic schema changes.
 
-Allow camera access in your browser when using the configured localhost frontend
-address (default `localhost:3000`; it may be `localhost:3002` if you changed the
-host port mapping). Access from a
-different device over a LAN requires HTTPS because browsers do not provide camera
-access over ordinary HTTP IP addresses. Configure TLS at the reverse proxy when
-deploying beyond the local machine.
+Live camera scanning works on localhost and on HTTPS. For a LAN demo over HTTP,
+open the guard page on the phone and choose **Сфотографировать QR**. Take a photo
+of the QR on the computer screen, or select an existing photo if the browser
+opens a file picker. The browser decodes the image locally and sends the QR token
+to the verification endpoint.
+
+Parents and trusted persons see only students they can add in the search results.
+Review banners are shown once per browser and account. Administrators can enter
+a rejection reason directly in the request card.
 
 ## Development and testing
 

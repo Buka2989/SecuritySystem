@@ -35,14 +35,24 @@ test('all existing pages: parent request, admin approval, real QR decoding, guar
   adminPage.on('pageerror',e=>errors.push(e.message));
   await login(adminPage,adminName,adminPassword);await expect(adminPage).toHaveURL(/\/admin$/);
   const card=adminPage.locator('article').filter({hasText:student.full_name});
-  adminPage.once('dialog',d=>d.accept('E2E: please resubmit'));
   await card.getByRole('button',{name:'Отклонить',exact:true}).click();
-  await expect(card.getByRole('button',{name:'Отклонить',exact:true})).toHaveCount(0);
+  const confirmReject=card.getByRole('button',{name:'Подтвердить отклонение',exact:true});
+  await expect(confirmReject).toBeDisabled();
+  await card.getByLabel('Причина отклонения').fill('E2E: please resubmit');
+  await confirmReject.click();
+  await expect(card.getByText('Отклонено',{exact:true})).toBeVisible();
   await page.reload();await page.getByRole('button',{name:'Подать заявку повторно'}).click();
   await expect(page.getByText('На рассмотрении',{exact:true})).toBeVisible();
   await adminPage.reload();
   await card.getByRole('button',{name:'Одобрить',exact:true}).click();
   await expect(card.getByRole('button',{name:'Одобрить',exact:true})).toHaveCount(0);
+  await page.getByRole('link',{name:'+ Добавить ребёнка'}).click();
+  await page.getByLabel('ФИО',{exact:true}).fill(student.full_name);
+  await page.getByLabel('Класс',{exact:true}).fill('5A');
+  await page.getByRole('button',{name:'Найти',exact:true}).click();
+  await expect(page.getByText('Найденные ученики уже добавлены в ваш профиль.')).toBeVisible();
+  await expect(page.getByRole('button',{name:'Это мой ребёнок'})).toHaveCount(0);
+  await page.getByRole('link',{name:'Назад',exact:true}).click();
   await page.reload(); await page.getByText(student.full_name,{exact:true}).click();
   await expect(page).toHaveURL(/\/students\//);
   await page.getByRole('button',{name:'Сгенерировать QR',exact:true}).click();
@@ -67,7 +77,10 @@ test('all existing pages: parent request, admin approval, real QR decoding, guar
   await guardPage.getByRole('button',{name:'Начать сканирование'}).click();
   await expect(guardPage.getByText('ВХОД РАЗРЕШЁН',{exact:true})).toBeVisible({timeout:30000});
   await expect(guardPage.locator('.history-table-wrapper')).toContainText('VALID_QR');
-  await guardPage.getByRole('button',{name:'Начать сканирование'}).click();
+  const photo = await page.locator('.qr-panel__code').screenshot();
+  await guardPage.getByLabel('Фото QR-кода').setInputFiles({
+    name: 'qr-photo.png', mimeType: 'image/png', buffer: photo,
+  });
   await expect(guardPage.locator('.verification-result')).toContainText('QR_ALREADY_USED',{timeout:30000});
   const trustedContext=await browser.newContext();const trustedPage=await trustedContext.newPage();
   await login(trustedPage,names.trusted,password);await expect(trustedPage).toHaveURL(/\/dashboard$/);

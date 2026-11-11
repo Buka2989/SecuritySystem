@@ -36,6 +36,11 @@ test('student editing, selectable search, review notification and export options
   await admin.locator('article').filter({hasText:studentName}).getByRole('button',{name:'Одобрить',exact:true}).click();
   await expect(parent.getByRole('status')).toContainText('подтверждена',{timeout:12000});
   await expect(parent.locator('.student-card .status-badge')).toContainText('Подтверждено');await capture(parent,'review-notification');
+  await parent.getByRole('button',{name:'Выйти',exact:true}).click();
+  await login(parent,parentName,password);
+  await parent.waitForResponse(response=>response.url().endsWith('/api/notifications') && response.ok());
+  await expect(parent.getByText(studentName,{exact:true})).toBeVisible();
+  await expect(parent.getByText('Связь с учеником подтверждена.',{exact:false})).toHaveCount(0);
   await parent.getByText(studentName,{exact:true}).click();await parent.getByLabel('Срок действия QR').selectOption('5');
   await parent.getByRole('button',{name:'Сгенерировать QR',exact:true}).click();await expect(parent.locator('.qr-panel__timer')).toContainText('Действителен ещё');
   await capture(parent,'configured-qr');

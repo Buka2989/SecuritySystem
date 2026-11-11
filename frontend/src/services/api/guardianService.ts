@@ -41,17 +41,23 @@ function mapStudent(data: BackendStudent): Student {
   };
 }
 
-export async function getMyChildren(
-  _guardianId: string,
+export async function getMyGuardianLinks(
   token?: string | null,
-): Promise<GuardianStudentWithDetails[]> {
+): Promise<GuardianStudent[]> {
   const links = await apiRequest<BackendGuardianStudent[]>(
     '/guardian-students/',
     {
       token,
     },
   );
+  return links.map(mapGuardianStudent);
+}
 
+export async function getMyChildren(
+  _guardianId: string,
+  token?: string | null,
+): Promise<GuardianStudentWithDetails[]> {
+  const links = await getMyGuardianLinks(token);
   const students = await apiRequest<BackendStudent[]>(
     '/students/',
     { token },
@@ -62,14 +68,14 @@ export async function getMyChildren(
   );
 
   return links.map((link) => {
-    const student = studentMap.get(link.student_id);
+    const student = studentMap.get(link.studentId);
 
     if (!student) {
-      throw new Error(`Student ${link.student_id} not found`);
+      throw new Error(`Student ${link.studentId} not found`);
     }
 
     return {
-      ...mapGuardianStudent(link),
+      ...link,
       student,
     };
   });

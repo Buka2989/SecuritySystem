@@ -275,6 +275,15 @@
   background: #465265;
 }
 
+.security-button ~ .security-button--photo {
+  margin-top: 8px;
+}
+
+.security-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 /* ERROR */
 
 .security-error {

@@ -721,7 +721,12 @@ a {
   color: #1f2937;
 }
 
-.form-group input {
+.admin-rejection-form {
+  margin-top: 16px;
+}
+
+.form-group input,
+.form-group textarea {
   width: 100%;
   box-sizing: border-box;
   padding: 11px 13px;
@@ -733,7 +738,8 @@ a {
   background: #ffffff;
 }
 
-.form-group input:focus {
+.form-group input:focus,
+.form-group textarea:focus {
   border-color: #23436b;
   box-shadow: 0 0 0 2px rgba(35, 67, 107, 0.08);
 }

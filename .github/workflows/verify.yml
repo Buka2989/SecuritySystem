@@ -36,12 +36,19 @@ jobs:
           printf '\nPOSTGRES_PASSWORD=%s\nJWT_SECRET_KEY=%s\nBOOTSTRAP_ADMIN_USERNAME=ci_admin\nBOOTSTRAP_ADMIN_PASSWORD=%s\n' "$(openssl rand -hex 24)" "$(openssl rand -hex 48)" "$(openssl rand -hex 24)" >> .env
       - name: Build and run all three containers
         run: docker compose up -d --build --wait --wait-timeout 180
+      - name: Read published Compose ports
+        shell: bash
+        run: |
+          backend=$(docker compose port backend 8080)
+          frontend=$(docker compose port frontend 80)
+          echo "BACKEND_BASE_URL=http://localhost:${backend##*:}" >> "$GITHUB_ENV"
+          echo "E2E_BASE_URL=http://localhost:${frontend##*:}" >> "$GITHUB_ENV"
       - name: Health, Swagger and SPA routes
         run: |
-          curl -fsS http://localhost:8080/health
-          curl -fsS http://localhost:8080/v3/api-docs > /tmp/openapi.json
-          curl -fsS http://localhost:8080/swagger-ui/index.html > /dev/null
-          for route in login dashboard add-child admin security; do curl -fsS "http://localhost:3000/$route" | grep -q 'id="root"'; done
+          curl -fsS "$BACKEND_BASE_URL/health"
+          curl -fsS "$BACKEND_BASE_URL/v3/api-docs" > /tmp/openapi.json
+          curl -fsS "$BACKEND_BASE_URL/swagger-ui/index.html" > /dev/null
+          for route in login dashboard add-child admin security; do curl -fsS "$E2E_BASE_URL/$route" | grep -q 'id="root"'; done
       - name: Install browser test dependencies
         working-directory: e2e
         run: |

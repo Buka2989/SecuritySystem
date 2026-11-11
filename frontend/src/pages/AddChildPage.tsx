@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { searchStudents } from '@/services/api/studentService';
+import { getMyGuardianLinks } from '@/services/api/guardianService';
 import type { Student } from '@/types';
 
 export function AddChildPage() {
@@ -28,18 +29,20 @@ export function AddChildPage() {
       setError(null);
       setStudents([]);
 
-      const results = await searchStudents(
-        fullName.trim(),
-        className.trim(),
-        token,
-        mode
-      );
+      const [results, links] = await Promise.all([
+        searchStudents(fullName.trim(), className.trim(), token, mode),
+        getMyGuardianLinks(token),
+      ]);
+      const linkedIds = new Set(links.map((link) => link.studentId));
+      const available = results.filter((student) => !linkedIds.has(student.id));
 
       if (results.length === 0) {
         setError('Ученик не найден.');
+      } else if (available.length === 0) {
+        setError('Найденные ученики уже добавлены в ваш профиль.');
       }
 
-      setStudents(results);
+      setStudents(available);
     } catch (err) {
       console.error(err);
       setError('Не удалось выполнить поиск.');

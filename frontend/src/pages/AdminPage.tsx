@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import {
   getVerificationRequests,
@@ -29,6 +29,7 @@ export function AdminPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [processingId, setProcessingId] = useState<string | null>(null);
+  const [rejection, setRejection] = useState<{ id: string; comment: string } | null>(null);
 
   useEffect(() => {
     async function loadRequests() {
@@ -66,12 +67,10 @@ export function AdminPage() {
     }
   }
 
-  async function handleReject(requestId: string) {
-    const comment = window.prompt('Укажите причину отклонения:');
-
-    if (!comment || !comment.trim()) {
-      return;
-    }
+  async function handleReject(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!rejection || !rejection.comment.trim() || processingId) return;
+    const { id: requestId, comment } = rejection;
 
     try {
       setProcessingId(requestId);
@@ -85,6 +84,7 @@ export function AdminPage() {
 
       const data = await getVerificationRequests(token);
       setRequests(data);
+      setRejection(null);
     } catch (err) {
       console.error(err);
       setError('Не удалось отклонить заявку.');
@@ -267,7 +267,7 @@ export function AdminPage() {
                           handleApprove(request.id)
                         }
                         disabled={
-                          processingId === request.id
+                          processingId !== null || rejection?.id === request.id
                         }
                       >
                         {processingId === request.id
@@ -277,16 +277,38 @@ export function AdminPage() {
 
                       <button
                         className="btn-secondary"
-                        onClick={() =>
-                          handleReject(request.id)
-                        }
+                        onClick={() => setRejection({ id: request.id, comment: '' })}
                         disabled={
-                          processingId === request.id
+                          processingId !== null || rejection?.id === request.id
                         }
                       >
                         Отклонить
                       </button>
                     </div>
+                    {rejection?.id === request.id && (
+                      <form className="admin-rejection-form" onSubmit={handleReject}>
+                        <div className="form-group">
+                          <label htmlFor={`rejection-${request.id}`}>Причина отклонения</label>
+                          <textarea
+                            id={`rejection-${request.id}`}
+                            rows={3}
+                            required
+                            autoFocus
+                            value={rejection.comment}
+                            onChange={(event) => setRejection({ id: request.id, comment: event.target.value })}
+                            disabled={processingId !== null}
+                          />
+                        </div>
+                        <div className="admin-request-card__actions">
+                          <button type="submit" className="btn-primary" disabled={processingId !== null || !rejection.comment.trim()}>
+                            Подтвердить отклонение
+                          </button>
+                          <button type="button" className="btn-secondary" disabled={processingId !== null} onClick={() => setRejection(null)}>
+                            Отмена
+                          </button>
+                        </div>
+                      </form>
+                    )}
                   </article>
                 ))}
               </div>
