@@ -68,10 +68,18 @@ The administrator is created **only when the users table is empty**. Existing
 accounts and passwords are never overwritten. You can clear the bootstrap variables
 after the first successful start.
 
+By default, Compose publishes these local addresses:
+
 - Frontend: [localhost:3000](http://localhost:3000)
 - API health: [localhost:8080/health](http://localhost:8080/health)
 - Swagger UI: [localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
 - OpenAPI JSON: [localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs)
+
+If these host ports are already occupied, change only the host-side port mappings
+in `docker-compose.yml` (keep the container-side ports `80` and `8080` unchanged).
+For example, map frontend `3002:80` and backend `127.0.0.1:8081:8080`, then use
+`http://localhost:3002` for the frontend and `http://localhost:8081` for the API
+and Swagger. Use the same selected ports consistently in your local setup.
 
 In Swagger, call `POST /auth/login`, then paste the returned `access_token` into
 **Authorize**. Public registration through `POST /users/` supports PARENT and
@@ -126,7 +134,9 @@ runs `SELECT 1`, and the frontend starts after the backend becomes healthy.
 A schema validation failure prevents backend startup: inspect the imported schema
 instead of enabling automatic schema changes.
 
-Allow camera access in your browser when using `localhost:3000`. Access from a
+Allow camera access in your browser when using the configured localhost frontend
+address (default `localhost:3000`; it may be `localhost:3002` if you changed the
+host port mapping). Access from a
 different device over a LAN requires HTTPS because browsers do not provide camera
 access over ordinary HTTP IP addresses. Configure TLS at the reverse proxy when
 deploying beyond the local machine.
@@ -190,6 +200,20 @@ defaults and the PostgreSQL schema are preserved.
 | Strategy | `ContainsSearch` and `PrefixSearch` implement user-selected search |
 | Observer | `ReviewPublisher` notifies inbox and audit subscribers after commit |
 | Visitor | `StatisticsVisitor` aggregates allowed and denied report entries |
+
+### Four-person pattern allocation
+
+The course requires each student to independently implement and explain at least
+two patterns. The following allocation assigns all eight patterns across four
+students. Replace the member labels with the students' actual names before submission
+and make sure the allocation reflects who actually implemented each pattern.
+
+| Team member | Assigned patterns | Main implementation |
+|---|---|---|
+| Member 1 | Factory Method, Strategy | `ReportExporter`, `ContainsSearch`, `PrefixSearch` |
+| Member 2 | Builder, Visitor | `QrIssuePlan`, `ReportVisitor`, `StatisticsVisitor` |
+| Member 3 | Adapter, Decorator | `AccessLogReportAdapter`, `RedactedReportSource` |
+| Member 4 | Facade, Observer | `AccessReportFacade`, `ReviewPublisher`, subscribers |
 
 Review notifications are transient and bounded; persisted verification decisions
 remain the source of truth. A browser polls its own authenticated inbox and refreshes
