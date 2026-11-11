@@ -75,6 +75,11 @@ By default, Compose publishes these local addresses:
 - Swagger UI: [localhost:8081/swagger-ui/index.html](http://localhost:8081/swagger-ui/index.html)
 - OpenAPI JSON: [localhost:8081/v3/api-docs](http://localhost:8081/v3/api-docs)
 
+On Windows, double-click `Start-SecuritySystem.cmd` in the project root to
+start Compose and open the login page after configuring `.env`. On a machine
+with the existing local demo runtime, the same launcher uses that runtime
+and its demonstration database.
+
 If these host ports are already occupied, change only the host-side port mappings
 in `docker-compose.yml` (keep the container-side ports `80` and `8080` unchanged).
 If you change the frontend host port, update `CORS_ORIGINS` in `.env` to match
@@ -133,11 +138,8 @@ runs `SELECT 1`, and the frontend starts after the backend becomes healthy.
 A schema validation failure prevents backend startup: inspect the imported schema
 instead of enabling automatic schema changes.
 
-Live camera scanning works on localhost and on HTTPS. For a LAN demo over HTTP,
-open the guard page on the phone and choose **Сфотографировать QR**. Take a photo
-of the QR on the computer screen, or select an existing photo if the browser
-opens a file picker. The browser decodes the image locally and sends the QR token
-to the verification endpoint.
+The guard's scanner uses the camera live. Allow camera access when opening the
+guard page on localhost. To scan with a phone, serve the application over HTTPS.
 
 Parents and trusted persons see only students they can add in the search results.
 Review banners are shown once per browser and account. Administrators can enter

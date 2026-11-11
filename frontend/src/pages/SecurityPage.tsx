@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ChangeEvent } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Html5Qrcode,
   Html5QrcodeScannerState,
@@ -20,18 +20,14 @@ export function SecurityPage() {
   const { token } = useAuth();
 
   const scannerRef = useRef<Html5Qrcode | null>(null);
-  const photoInputRef = useRef<HTMLInputElement>(null);
   const verifyingRef = useRef(false);
 
   const [isScanning, setIsScanning] = useState(false);
-  const [isStarting, setIsStarting] = useState(false);
-  const [isReadingPhoto, setIsReadingPhoto] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<QRVerifyResponse | null>(null);
 
   const [accessLogs, setAccessLogs] = useState<AccessLog[]>([]);
   const [loadingLogs, setLoadingLogs] = useState(false);
-  const canStreamCamera = Boolean(navigator.mediaDevices?.getUserMedia);
 
   async function loadAccessLogs() {
     if (!token) {
@@ -52,7 +48,6 @@ export function SecurityPage() {
   }
 
   async function startScanner() {
-    if (scannerRef.current || verifyingRef.current) return;
     setError(null);
     setResult(null);
 
@@ -63,7 +58,6 @@ export function SecurityPage() {
 
     const scanner = new Html5Qrcode('qr-reader');
     scannerRef.current = scanner;
-    setIsStarting(true);
 
     try {
       await scanner.start(
@@ -122,40 +116,6 @@ export function SecurityPage() {
       );
 
       scannerRef.current = null;
-    } finally {
-      setIsStarting(false);
-    }
-  }
-
-  async function scanPhoto(event: ChangeEvent<HTMLInputElement>) {
-    const file = event.currentTarget.files?.[0];
-    event.currentTarget.value = '';
-    if (!file || !token || scannerRef.current || verifyingRef.current) return;
-
-    verifyingRef.current = true;
-    setIsReadingPhoto(true);
-    setError(null);
-    setResult(null);
-
-    try {
-      const reader = new Html5Qrcode('qr-photo-reader');
-      let decoded: string;
-      try {
-        decoded = await reader.scanFile(file, false);
-      } catch {
-        setError('QR-код на фото не распознан. Снимите его целиком и без бликов.');
-        return;
-      } finally {
-        reader.clear();
-      }
-
-      setResult(await verifyQR(decoded, token));
-      await loadAccessLogs();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Не удалось проверить QR-код');
-    } finally {
-      verifyingRef.current = false;
-      setIsReadingPhoto(false);
     }
   }
 
@@ -296,9 +256,8 @@ export function SecurityPage() {
                 <h3>Готов к сканированию</h3>
 
                 <p>
-                  {canStreamCamera
-                    ? 'Включите сканирование или сделайте снимок QR-кода.'
-                    : 'Сфотографируйте QR-код или выберите готовый снимок.'}
+                  Нажмите кнопку ниже, чтобы включить
+                  камеру.
                 </p>
               </div>
             )}
@@ -312,35 +271,13 @@ export function SecurityPage() {
             >
               ■ Остановить сканирование
             </button>
-          ) : canStreamCamera && (
+          ) : (
             <button
               type="button"
               className="security-button"
               onClick={startScanner}
-              disabled={isStarting || isReadingPhoto}
             >
-              {isStarting ? 'Открываем камеру…' : '📷 Начать сканирование'}
-            </button>
-          )}
-
-          <div id="qr-photo-reader" hidden />
-          <input
-            ref={photoInputRef}
-            type="file"
-            accept="image/*"
-            capture="environment"
-            aria-label="Фото QR-кода"
-            hidden
-            onChange={scanPhoto}
-          />
-          {!isScanning && (
-            <button
-              type="button"
-              className="security-button security-button--photo"
-              onClick={() => photoInputRef.current?.click()}
-              disabled={isStarting || isReadingPhoto}
-            >
-              {isReadingPhoto ? 'Проверяем снимок…' : 'Сфотографировать QR'}
+              📷 Начать сканирование
             </button>
           )}
 

@@ -212,6 +212,38 @@ a {
   border-color: var(--color-primary);
 }
 
+.login-password {
+  position: relative;
+}
+
+.login-password input {
+  padding-inline-end: 44px;
+}
+
+.login-password__toggle {
+  position: absolute;
+  inset-block: 2px;
+  inset-inline-end: 2px;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-ink-soft);
+  cursor: pointer;
+}
+
+.login-password__toggle:hover {
+  color: var(--color-primary);
+}
+
+.login-password__toggle:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -2px;
+}
+
 .form-error {
   background: var(--color-rejected-bg);
   color: var(--color-rejected);

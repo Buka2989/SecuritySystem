@@ -77,10 +77,7 @@ test('all existing pages: parent request, admin approval, real QR decoding, guar
   await guardPage.getByRole('button',{name:'Начать сканирование'}).click();
   await expect(guardPage.getByText('ВХОД РАЗРЕШЁН',{exact:true})).toBeVisible({timeout:30000});
   await expect(guardPage.locator('.history-table-wrapper')).toContainText('VALID_QR');
-  const photo = await page.locator('.qr-panel__code').screenshot();
-  await guardPage.getByLabel('Фото QR-кода').setInputFiles({
-    name: 'qr-photo.png', mimeType: 'image/png', buffer: photo,
-  });
+  await guardPage.getByRole('button',{name:'Начать сканирование'}).click();
   await expect(guardPage.locator('.verification-result')).toContainText('QR_ALREADY_USED',{timeout:30000});
   const trustedContext=await browser.newContext();const trustedPage=await trustedContext.newPage();
   await login(trustedPage,names.trusted,password);await expect(trustedPage).toHaveURL(/\/dashboard$/);

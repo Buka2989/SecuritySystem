@@ -6,8 +6,9 @@ export function LoginPage() {
   const { user, login, isAuthenticating, error } = useAuth();
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState('admin');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   if (user) {
     if ((user.role === 'PARENT' || user.role === 'TRUSTED_PERSON')) {
@@ -25,6 +26,7 @@ export function LoginPage() {
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
+    setShowPassword(false);
 
     try {
       const loggedInUser = await login(username, password);
@@ -68,15 +70,47 @@ export function LoginPage() {
 
           <div className="field">
             <label htmlFor="password">Пароль</label>
-
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              autoComplete="current-password"
-              required
-            />
+            <div className="login-password">
+              <input
+                id="password"
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="current-password"
+                required
+              />
+              <button
+                type="button"
+                className="login-password__toggle"
+                aria-controls="password"
+                aria-label={showPassword ? 'Скрыть пароль' : 'Показать пароль'}
+                onClick={() => setShowPassword((shown) => !shown)}
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.75"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  {showPassword ? (
+                    <>
+                      <path d="M3 3l18 18M10.6 10.6a2 2 0 0 0 2.8 2.8" />
+                      <path d="M10.7 5.1A10 10 0 0 1 12 5c5 0 8.5 4 10 7a15 15 0 0 1-2.7 3.6M6.4 6.4C4.4 8 2.9 10 2 12c1.5 3 5 7 10 7 2 0 3.9-.7 5.6-1.7" />
+                    </>
+                  ) : (
+                    <>
+                      <path d="M2 12c1.5-3 5-7 10-7s8.5 4 10 7c-1.5 3-5 7-10 7s-8.5-4-10-7Z" />
+                      <circle cx="12" cy="12" r="3" />
+                    </>
+                  )}
+                </svg>
+              </button>
+            </div>
           </div>
 
           <button
